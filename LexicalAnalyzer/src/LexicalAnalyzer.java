@@ -1,3 +1,5 @@
+import dfa.LiteralStringDFA;
+
 import java.io.*;
 
 public class LexicalAnalyzer {
@@ -12,14 +14,16 @@ public class LexicalAnalyzer {
     public String toString() {
 
         String str = "";
-
+        LiteralStringDFA literalStringDFA;
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
 
-            while((str = br.readLine())!=null){
-                
-            }
+            /*while((str = br.readLine())!=null){
 
+            }*/
+            str=br.readLine();
+            literalStringDFA=new LiteralStringDFA(str, 0);
+            System.out.println(literalStringDFA.analyze());
             br.close();
 
         } catch (FileNotFoundException e) {
