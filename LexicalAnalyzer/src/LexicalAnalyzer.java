@@ -16,12 +16,16 @@ public class LexicalAnalyzer {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
 
-            str = br.readLine();
+            while((str = br.readLine())!=null){
+                
+            }
 
             br.close();
 
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return "LexicalAnalyzer{" +
