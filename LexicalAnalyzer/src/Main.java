@@ -9,10 +9,10 @@ public class Main {
             System.exit(0);
         }*/
 
-        File file = new File("/Users/junsu/Desktop/compiler-term-project-lexical-analyzer/compiler-term-project-lexical-analyzer/LexicalAnalyzer/src/Input.java");
+        File file = new File("C:\\Users\\문법식\\Desktop\\개인공부\\GitKraken\\compiler-term-project-lexical-analyzer\\LexicalAnalyzer\\src\\Input.java");
 
         LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(file);
 
-        System.out.println(lexicalAnalyzer.toString());
+        lexicalAnalyzer.toString();
     }
 }
