@@ -1,14 +1,15 @@
 package dfa;
 
 public class LiteralStringDFA {
-    private String inputStr;
+    private final String inputStr;
     private String resultStr="";
     private int position;
-    private int[][] dfaTable={{1},
-                              {5, 2, 3, 4},
-                              {5, 2, 3, 4},
-                              {5, 2, 3, 4},
-                              {5, 2, 3, 4}};
+                                               //    "   digit letter blank
+    private final int[][] dfaTable={{1},             //T0: T1   -      -      -
+                                    {5, 2, 3, 4},    //T1: T5   T2     T3     T4
+                                    {5, 2, 3, 4},    //T2: T5   T2     T3     T4
+                                    {5, 2, 3, 4},    //T3: T5   T2     T3     T4
+                                    {5, 2, 3, 4}};   //T4: T5   T2     T3     T4
     private int state;
 
     public LiteralStringDFA(String inputStr, int position){
@@ -18,12 +19,6 @@ public class LiteralStringDFA {
     }
 
     public int analyze(){
-        /*for(int i=0; i<dfaTable.length; i++){
-            for(int j=0; j<dfaTable[i].length; j++){
-                System.out.print(dfaTable[i][j]);
-            }
-            System.out.println();
-        }*/
         System.out.println(inputStr);
         for(int i=position; i<inputStr.length(); i++) {
             char ch = inputStr.charAt(i);
@@ -34,7 +29,7 @@ public class LiteralStringDFA {
             }
             System.out.println("state:"+state+"symbolType:"+symbolType);
             state = dfaTable[state][symbolType];
-            resultStr += ch;
+            resultStr+=ch;
             if (state == 5) {
                 System.out.println(resultStr);
                 position=i+1;
@@ -46,20 +41,13 @@ public class LiteralStringDFA {
     public int inputSymbolType(char ch){
         if(ch=='"')
             return 0;
-        else if(Character.isDigit(ch))
+        else if(ch>='0'&&ch<='9')
             return 1;
-        else if(is_Letter(ch))
+        else if((ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z'))
             return 2;
         else if(ch==' ')
             return 3;
         else
             return 'E'; //E is error
     }
-    public boolean is_Letter(char ch){
-        if(Character.isUpperCase(ch)|Character.isLowerCase(ch))
-            return true;
-        else
-            return false;
-    }
-
 }
