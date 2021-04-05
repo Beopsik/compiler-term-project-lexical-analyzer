@@ -1,7 +1,7 @@
 package dfa;
 
-public class BooleanStringDFA {
-    String [] booleanType=new String[]{"true", "false"};
+public class OneSymbolDFA {
+    char [] symbol=new char[]{'+', '-', '*', '/', '=', ';', '{', '}', '(', ')', '[', ']', ','};
 
     private final String inputStr;
     private String resultStr="";
@@ -10,12 +10,12 @@ public class BooleanStringDFA {
     private int symbolType=-1;
     private int kTypeIndex=0;
 
-    public BooleanStringDFA(String inputStr){
+    public OneSymbolDFA(String inputStr, int position){
         this.inputStr=inputStr;
+        this.startPosition=position;
     }
 
-    public int analyze(int position){
-        startPosition=position;
+    public int analyze(){
         System.out.println(inputStr);
         for(int i=startPosition; i<inputStr.length(); i++, endPosition=i) {
             char ch = inputStr.charAt(i);
@@ -23,32 +23,39 @@ public class BooleanStringDFA {
                 symbolType=inputSymbolType(ch);
                 if(symbolType=='E'){
                     System.out.println("error");
-                    endPosition=startPosition;
+                    endPosition=i;
                     break;
                 }
             }
 
-            if(kTypeIndex>=booleanType[symbolType].length()){
+            /*if(kTypeIndex>=keywordType[symbolType].length()){
                 System.out.println(resultStr);
-                //endPosition=i;
+                endPosition=i+1;
+                System.out.println(endPosition);
                 break;
             }
 
-            if(ch==booleanType[symbolType].charAt(kTypeIndex++)) {
+            if(ch==keywordType[symbolType].charAt(kTypeIndex++)) {
                 resultStr += ch;
             } else{
                 System.out.println("error");
-                endPosition=startPosition;
+                endPosition=i;
                 break;
-            }
+            }*/
         }
         return endPosition;
     }
     public int inputSymbolType(char ch){
-        if(ch=='t')
+        if(ch=='i')
             return 0;
-        else if(ch=='f')
+        else if(ch=='e')
             return 1;
+        else if(ch=='w')
+            return 2;
+        else if(ch=='c')
+            return 3;
+        else if(ch=='r')
+            return 4;
         else
             return 'E'; //E is error
     }

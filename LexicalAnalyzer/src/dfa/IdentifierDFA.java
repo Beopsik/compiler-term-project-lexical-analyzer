@@ -3,7 +3,8 @@ package dfa;
 public class IdentifierDFA {
     private final String inputStr;
     private String resultStr="";
-    private int position;
+    private int startPosition;
+    private int endPosition;
                                                    //    _   letter digit
     private final int[][] dfaTable={{1, 2},        //T0: T1   T2      -
                                     {3, 4 ,5},     //T1: T3   T4     T5
@@ -13,28 +14,28 @@ public class IdentifierDFA {
                                     {3, 4 ,5}};    //T5: T3   T4     T5
     private int state;
 
-    public IdentifierDFA(String inputStr, int position){
+    public IdentifierDFA(String inputStr){
         this.inputStr=inputStr;
-        this.position=position;
         this.state=0;
     }
 
-    public int analyze(){
+    public int analyze(int position){
+        startPosition=position;
         System.out.println(inputStr);
-        for(int i=position; i<inputStr.length(); i++) {
+        for(int i=startPosition; i<inputStr.length(); i++, endPosition=i) {
             char ch = inputStr.charAt(i);
             int symbolType = inputSymbolType(ch);
             if (symbolType == 'E') {
-                System.out.println("error");
+                //System.out.println("error");
                 System.out.println(resultStr);
-                position=i;
+                //endPosition=startPosition;
                 break;
             }
             System.out.println("state:"+state+"symbolType:"+symbolType);
             state = dfaTable[state][symbolType];
             resultStr+=ch;
         }
-        return position;
+        return endPosition;
     }
     public int inputSymbolType(char ch){
         if(ch=='_')

@@ -3,7 +3,8 @@ package dfa;
 public class LiteralStringDFA {
     private final String inputStr;
     private String resultStr="";
-    private int position;
+    private int startPosition;
+    private int endPosition;
                                                //    "   digit letter blank
     private final int[][] dfaTable={{1},             //T0: T1   -      -      -
                                     {5, 2, 3, 4},    //T1: T5   T2     T3     T4
@@ -14,29 +15,30 @@ public class LiteralStringDFA {
 
     public LiteralStringDFA(String inputStr, int position){
         this.inputStr=inputStr;
-        this.position=position;
+        this.startPosition=position;
         this.state=0;
     }
 
     public int analyze(){
         System.out.println(inputStr);
-        for(int i=position; i<inputStr.length(); i++) {
+        for(int i=startPosition; i<inputStr.length(); i++) {
             char ch = inputStr.charAt(i);
             int symbolType = inputSymbolType(ch);
             if (symbolType == 'E') {
                 System.out.println("error");
-                return 0;
+                endPosition=i;
+                break;
             }
             System.out.println("state:"+state+"symbolType:"+symbolType);
             state = dfaTable[state][symbolType];
             resultStr+=ch;
             if (state == 5) {
                 System.out.println(resultStr);
-                position=i+1;
+                endPosition=i+1;
                 break;
             }
         }
-        return position;
+        return endPosition;
     }
     public int inputSymbolType(char ch){
         if(ch=='"')

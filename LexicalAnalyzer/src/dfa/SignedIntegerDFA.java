@@ -3,7 +3,8 @@ package dfa;
 public class SignedIntegerDFA {
     private final String inputStr;
     private String resultStr="";
-    private int position;
+    private int startPosition;
+    private int endPosition;
                                                    //    P-digit   digit  -   0
     private final int[][] dfaTable={{1, -1, 2, 4}, //T0: T1        .      T2  T4
                                     {-1, 3},       //T1: .         T3     .   .
@@ -13,29 +14,29 @@ public class SignedIntegerDFA {
 
     public SignedIntegerDFA(String inputStr, int position){
         this.inputStr=inputStr;
-        this.position=position;
+        this.startPosition=position;
         this.state=0;
     }
 
     public int analyze(){
         System.out.println(inputStr);
-        for(int i=position; i<inputStr.length(); i++) {
+        for(int i=startPosition; i<inputStr.length(); i++) {
             char ch = inputStr.charAt(i);
             int symbolType = inputSymbolType(ch);
             if (symbolType == 'E') {
                 System.out.println("error");
                 System.out.println(resultStr);
-                position=i;
+                endPosition=i;
                 break;
             }else if(symbolType == '4'){
                 System.out.println(resultStr);
-                position=i+1;
+                endPosition=i+1;
             }
             System.out.println("state:"+state+", symbolType:"+symbolType+", ch:"+ch);
             state = dfaTable[state][symbolType];
             resultStr+=ch;
         }
-        return position;
+        return endPosition;
     }
     public int inputSymbolType(char ch){
         if((ch>='1'&&ch<='9')&&(state==0||state==2))

@@ -1,19 +1,19 @@
 package dfa;
 
-public class SingleCharaterDFA {
+public class ComparisonOperatorDFA {
     private final String inputStr;
     private String resultStr="";
     private int startPosition;
     private int endPosition;
-                                                     //    '   digit letter blank
-    private final int[][] dfaTable={{1},             //T0: T1   -      -      -
-                                    {-1, 2, 3, 4},   //T1: -    T2     T3     T4
+                                                     //    =    !      <      >
+    private final int[][] dfaTable={{1, 2, 3, 4},    //T0: T1   -      -      -
+                                    {5},             //T1: -    T2     T3     T4
                                     {5},             //T2: T5   -      -      -
                                     {5},             //T3: T5   -      -      -
                                     {5}};            //T4: T5   -      -      -
     private int state;
 
-    public SingleCharaterDFA(String inputStr, int position){
+    public ComparisonOperatorDFA(String inputStr, int position){
         this.inputStr=inputStr;
         this.startPosition=position;
         this.state=0;
@@ -26,6 +26,7 @@ public class SingleCharaterDFA {
             int symbolType = inputSymbolType(ch);
             if (symbolType == 'E') {
                 System.out.println("error");
+                System.out.println(resultStr);
                 endPosition=i;
                 break;
             }
@@ -41,13 +42,13 @@ public class SingleCharaterDFA {
         return endPosition;
     }
     public int inputSymbolType(char ch){
-        if(ch=='\'')
+        if(ch=='=')
             return 0;
-        else if(ch>='0'&&ch<='9')
+        else if(ch=='!')
             return 1;
-        else if((ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z'))
+        else if(ch=='<')
             return 2;
-        else if(ch==' ')
+        else if(ch=='>')
             return 3;
         else
             return 'E'; //E is error
