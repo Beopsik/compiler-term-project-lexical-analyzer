@@ -154,4 +154,147 @@ public class DFATable {
             return null;
         }
     }
+    public JSONArray arithmeticOperatorDFATable(){
+        String dfaTable="[" +
+                "{\"+\":1, \"-\":1, \"*\":1, \"/\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray assginmentOperatorDFATable(){
+        String dfaTable="[" +
+                "{\"=\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray terminateSymbolDFATable(){
+        String dfaTable="[" +
+                "{\";\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray lParenDFATable(){
+        String dfaTable="[" +
+                "{\"(\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray rParenDFATable(){
+        String dfaTable="[" +
+                "{\")\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray lBraceDFATable(){
+        String dfaTable="[" +
+                "{\"{\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray rBraceDFATable(){
+        String dfaTable="[" +
+                "{\"}\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray lBranketDFATable(){
+        String dfaTable="[" +
+                "{\"[\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray rBranketDFATable(){
+        String dfaTable="[" +
+                "{\"]\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray commaDFATable(){
+        String dfaTable="[" +
+                "{\",\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray whiteSpaceDFATable(){
+        String dfaTable="[" +
+                "{\" \":1, \"\t\":1, \"\n\":1}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

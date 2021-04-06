@@ -22,7 +22,7 @@ public class LexicalAnalyzer {
                 inputstr+=str;
             }
             DFA dfa=new DFA(inputstr);
-            dfa.variableTypeDFA(0);
+            dfa.whiteSpaceDFA(0);
             br.close();
 
         } catch (FileNotFoundException e) {
