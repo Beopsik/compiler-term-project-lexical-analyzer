@@ -3,6 +3,8 @@ package dfa;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.List;
+
 public class DFA {
     private final String inputstr;
     private int startPostion;
@@ -28,11 +30,32 @@ public class DFA {
     private final JSONArray commaDFATable=dfaTable.commaDFATable();
     private final JSONArray whiteSpaceDFATable=dfaTable.whiteSpaceDFATable();
 
-    public DFA(String inputstr){
+    public DFA(String inputstr, int postion){
         this.inputstr=inputstr;
+        this.startPostion=postion;
+    }
+    public void run(){
+        identifierDFA(startPostion);
+        booleanStringDFA(startPostion);
+        keywordDFA(startPostion);
+        variableTypeDFA(startPostion);
+        singleCharacterDFA(startPostion);
+        literalStringDFA(startPostion);
+        signedIntegerDFA(startPostion);
+        arithmeticOperatorDFA(startPostion);
+        assignmentOperatorDFA(startPostion);
+        terminateSymbolDFA(startPostion);
+        lParenDFA(startPostion);
+        rParenDFA(startPostion);
+        lBraceDFA(startPostion);
+        rBraceDFA(startPostion);
+        lBranketDFA(startPostion);
+        rBranketDFA(startPostion);
+        commaDFA(startPostion);
+        whiteSpaceDFA(startPostion);
     }
     public void identifierDFA(int position){
-        boolean identifierDFALive=false;
+        boolean identifierDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -60,7 +83,7 @@ public class DFA {
         System.out.println(resultStr);
      }
     public void singleCharacterDFA(int position){
-        boolean signleCharacterDFALive=false;
+        boolean signleCharacterDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -93,7 +116,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void literalStringDFA(int position){
-        boolean literalStringDFALive=false;
+        boolean literalStringDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -127,7 +150,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void signedIntegerDFA(int position){
-        boolean signedIntegerDFALive=false;
+        boolean signedIntegerDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -156,7 +179,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void booleanStringDFA(int position){
-        boolean booleanStringDFALive=false;
+        boolean booleanStringDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -183,7 +206,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void keywordDFA(int position){
-        boolean keywordDFALive=false;
+        boolean keywordDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -210,7 +233,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void variableTypeDFA(int position){
-        boolean variableTypeDFALive=false;
+        boolean variableTypeDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -237,7 +260,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void arithmeticOperatorDFA(int position){
-        boolean arithmenticOperatorDFALive=false;
+        boolean arithmenticOperatorDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -264,7 +287,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void assignmentOperatorDFA(int position){
-        boolean assignmnetOperatorDFALive=false;
+        boolean assignmnetOperatorDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -291,7 +314,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void terminateSymbolDFA(int position){
-        boolean terminateSymbolDFALive=false;
+        boolean terminateSymbolDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -318,7 +341,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void lParenDFA(int position){
-        boolean lParenDFALive=false;
+        boolean lParenDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -345,7 +368,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void rParenDFA(int position){
-        boolean rParenDFALive=false;
+        boolean rParenDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -372,7 +395,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void lBraceDFA(int position){
-        boolean lBraceDFALive=false;
+        boolean lBraceDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -399,7 +422,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void rBraceDFA(int position){
-        boolean rBraceDFALive=false;
+        boolean rBraceDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -426,7 +449,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void lBranketDFA(int position){
-        boolean lBranketDFALive=false;
+        boolean lBranketDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -453,7 +476,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void rBranketDFA(int position){
-        boolean rBranketDFALive=false;
+        boolean rBranketDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -480,7 +503,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void commaDFA(int position){
-        boolean commaDFALive=false;
+        boolean commaDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;
@@ -507,7 +530,7 @@ public class DFA {
         System.out.println(resultStr);
     }
     public void whiteSpaceDFA(int position){
-        boolean whiteSpaceDFALive=false;
+        boolean whiteSpaceDFALive=true;
         int state=0;
         resultStr="";
         startPostion=position;

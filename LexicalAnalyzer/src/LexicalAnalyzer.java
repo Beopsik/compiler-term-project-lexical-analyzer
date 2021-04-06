@@ -21,7 +21,7 @@ public class LexicalAnalyzer {
             while((str=br.readLine())!=null){
                 inputstr+=str;
             }
-            DFA dfa=new DFA(inputstr);
+            DFA dfa=new DFA(inputstr, 0);
             dfa.whiteSpaceDFA(0);
             br.close();
 
