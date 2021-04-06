@@ -1,1 +1,1 @@
-int myage if ifa true boolean
+int if ifa myage true class falsee

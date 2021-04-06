@@ -15,31 +15,31 @@ public class KeywordDFA {
     }
 
     public int analyze(int position){
+        resultStr="";
         startPosition=position;
-        System.out.println(inputStr);
+        //System.out.println(inputStr);
         for(int i=startPosition; i<inputStr.length(); i++, endPosition=i) {
             char ch = inputStr.charAt(i);
             if(symbolType==-1) {
                 symbolType=inputSymbolType(ch);
-                if(symbolType=='E'){
-                    System.out.println("error");
-                    endPosition=startPosition;
-                    break;
-                }
             }
-
+            if(symbolType=='E'){
+                //System.out.println("error");
+                //endPosition=startPosition;
+                break;
+            }
             if(kTypeIndex>=keywordType[symbolType].length()){
-                System.out.println(resultStr);
+                //System.out.println(resultStr);
                 //endPosition=i;
-                System.out.println(endPosition);
+                //System.out.println(endPosition);
                 break;
             }
 
             if(ch==keywordType[symbolType].charAt(kTypeIndex++)) {
                 resultStr += ch;
             } else{
-                System.out.println("error");
-                endPosition=startPosition;
+                //System.out.println("error");
+                //endPosition=startPosition;
                 break;
             }
         }
@@ -58,5 +58,11 @@ public class KeywordDFA {
             return 4;
         else
             return 'E'; //E is error
+    }
+    public String getResultStr(){
+        return resultStr;
+    }
+    public int getEndPosition(){
+        return endPosition;
     }
 }
