@@ -46,54 +46,63 @@ public class LexicalAnalyzer {
             //System.out.println("------------------------------------------------------");
             //System.out.println("Iposition: " + identifierDFA.analyze(0));
             //System.out.println("------------------------------------------------------");
+            System.out.println(inputstr);
             for(int i=0; i<inputstr.length();) {
                 if(inputstr.charAt(i)==' ')
                     i++;
-                System.out.println(i);
-
+                //System.out.println("------------------------------------------------------");
+                //System.out.println(i);
+                //System.out.println("start input: "+inputstr.charAt(i));
                 variableTypeDFA.analyze(i);
-                System.out.println("i: "+i+", v:"+variableTypeDFA.getEndPosition());
+                //System.out.println("i: "+i+", v:"+variableTypeDFA.getEndPosition());
+                //System.out.println();
 
                 keywordDFA.analyze(i);
-                System.out.println("i: "+i+", k:"+keywordDFA.getEndPosition());
+                //System.out.println("i: "+i+", k:"+keywordDFA.getEndPosition());
+                //System.out.println();
 
                 booleanStringDFA.analyze(i);
-                System.out.println("i: "+i+", b:"+booleanStringDFA.getEndPosition());
+                //System.out.println("i: "+i+", b:"+booleanStringDFA.getEndPosition());
+                //System.out.println();
 
                 identifierDFA.analyze(i);
-                System.out.println("i: "+i+", I:"+identifierDFA.getEndPosition());
-
-                if(variableTypeDFA.getEndPosition()>=i){
-                    if(variableTypeDFA.getResultStr().compareTo(identifierDFA.getResultStr())==0){
-                        System.out.println("<VARIABLETYPE, " +variableTypeDFA.getResultStr()+">");
-                        i=variableTypeDFA.getEndPosition();
+                //System.out.println("i: "+i+", I:"+identifierDFA.getEndPosition());
+                if(variableTypeDFA.getEndPosition()>i){
+                    //System.out.println("V: "+variableTypeDFA.getResultStr());
+                    if(variableTypeDFA.getResultStr().compareTo(identifierDFA.getResultStr())==0) {
+                        System.out.println("<VARIABLETYPE, " + variableTypeDFA.getResultStr() + ">");
+                        i = variableTypeDFA.getEndPosition();
                     }else{
-                        System.out.println("<VARIABLETYPE, " +variableTypeDFA.getResultStr()+">");
+                        //System.out.println('I');
                         System.out.println("<IDENTIFIER, " +identifierDFA.getResultStr()+">");
-                        System.out.println();
                         i= identifierDFA.getEndPosition();;
                     }
-                }else if(keywordDFA.getEndPosition()>=i){
+                }else if(keywordDFA.getEndPosition()>i){
+                    //System.out.println("K: "+keywordDFA.getResultStr());
                     if(keywordDFA.getResultStr().compareTo(identifierDFA.getResultStr())==0){
                         System.out.println("<KEYWORD, " +keywordDFA.getResultStr()+">");
                         i=keywordDFA.getEndPosition();
                     }else{
-                        System.out.println("<KEYWORD, " +keywordDFA.getResultStr()+">");
+                        //System.out.println('I');
                         System.out.println("<IDENTIFIER, " +identifierDFA.getResultStr()+">");
-                        System.out.println();
-                        i= identifierDFA.getEndPosition();
+                        i= identifierDFA.getEndPosition();;
                     }
-                }else if(booleanStringDFA.getEndPosition()>=i){
+                }else if(booleanStringDFA.getEndPosition()>i){
+                    //System.out.println("B: "+booleanStringDFA.getResultStr());
                     if(booleanStringDFA.getResultStr().compareTo(identifierDFA.getResultStr())==0){
                         System.out.println("<BOOLEAN, " +booleanStringDFA.getResultStr()+">");
                         i=booleanStringDFA.getEndPosition();
                     }else{
-                        System.out.println("<BOOLEAN, " +booleanStringDFA.getResultStr()+">");
+                        //System.out.println('I');
                         System.out.println("<IDENTIFIER, " +identifierDFA.getResultStr()+">");
-                        System.out.println();
-                        i= identifierDFA.getEndPosition();
+                        i= identifierDFA.getEndPosition();;
                     }
+                }else{
+                    //System.out.println('I');
+                    System.out.println("<IDENTIFIER, " +identifierDFA.getResultStr()+">");
+                    i= identifierDFA.getEndPosition();;
                 }
+                //System.out.println("------------------------------------------------------");
             }
             br.close();
 

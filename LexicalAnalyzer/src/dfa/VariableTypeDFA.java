@@ -16,6 +16,8 @@ public class VariableTypeDFA {
     public int analyze(int position){
         resultStr="";
         startPosition=position;
+        vTypeIndex=0;
+        symbolType=-1;
         //System.out.println(inputStr);
         for(int i=startPosition; i<inputStr.length(); i++, endPosition=i) {
             char ch = inputStr.charAt(i);
@@ -23,21 +25,21 @@ public class VariableTypeDFA {
                 symbolType=inputSymbolType(ch);
             }
             if(symbolType=='E'){
-                //System.out.println("error");
-                //endPosition=startPosition;
+                //System.out.println("Verror");
+                endPosition=startPosition;
                 break;
             }
             if(vTypeIndex>=variableType[symbolType].length()){
                 //System.out.println(resultStr);
-                //endPosition=i;
+                endPosition=i;
                 break;
             }
 
             if(ch==variableType[symbolType].charAt(vTypeIndex++)) {
                 resultStr += ch;
             } else{
-                //System.out.println("error");
-                //endPosition=startPosition;
+                //System.out.println("Verror");
+                endPosition=startPosition;
                 break;
             }
         }

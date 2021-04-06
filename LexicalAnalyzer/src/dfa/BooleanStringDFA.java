@@ -8,7 +8,7 @@ public class BooleanStringDFA {
     private int startPosition;
     private int endPosition;
     private int symbolType=-1;
-    private int kTypeIndex=0;
+    private int bTypeIndex=0;
 
     public BooleanStringDFA(String inputStr){
         this.inputStr=inputStr;
@@ -17,6 +17,8 @@ public class BooleanStringDFA {
     public int analyze(int position){
         resultStr="";
         startPosition=position;
+        bTypeIndex=0;
+        symbolType=-1;
         //System.out.println(inputStr);
         for(int i=startPosition; i<inputStr.length(); i++, endPosition=i) {
             char ch = inputStr.charAt(i);
@@ -24,21 +26,21 @@ public class BooleanStringDFA {
                 symbolType=inputSymbolType(ch);
             }
             if(symbolType=='E'){
-                //System.out.println("error");
-                //endPosition=startPosition;
+                //System.out.println("Berror");
+                endPosition=startPosition;
                 break;
             }
-            if(kTypeIndex>=booleanType[symbolType].length()){
+            if(bTypeIndex>=booleanType[symbolType].length()){
                 //System.out.println(resultStr);
-                //endPosition=i;
+                endPosition=i;
                 break;
             }
 
-            if(ch==booleanType[symbolType].charAt(kTypeIndex++)) {
+            if(ch==booleanType[symbolType].charAt(bTypeIndex++)) {
                 resultStr += ch;
             } else{
-                //System.out.println("error");
-                //endPosition=startPosition;
+                //System.out.println("Berror");
+                endPosition=startPosition;
                 break;
             }
         }
