@@ -26,12 +26,12 @@ public class KeywordDFA {
                 symbolType=inputSymbolType(ch);
             }
             if(symbolType=='E'){
-                //System.out.println("Kerror");
+                System.out.println("startKerror");
                 endPosition=startPosition;
                 break;
             }
             if(kTypeIndex>=keywordType[symbolType].length()){
-                //System.out.println(resultStr);
+                System.out.println("kEnd");
                 endPosition=i;
                 //System.out.println(endPosition);
                 break;
@@ -40,7 +40,7 @@ public class KeywordDFA {
             if(ch==keywordType[symbolType].charAt(kTypeIndex++)) {
                 resultStr += ch;
             } else{
-                //System.out.println("Kerror");
+                System.out.println("middleKerror");
                 endPosition=startPosition;
                 break;
             }

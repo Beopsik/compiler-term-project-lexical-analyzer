@@ -26,12 +26,12 @@ public class BooleanStringDFA {
                 symbolType=inputSymbolType(ch);
             }
             if(symbolType=='E'){
-                //System.out.println("Berror");
+                System.out.println("startBerror");
                 endPosition=startPosition;
                 break;
             }
             if(bTypeIndex>=booleanType[symbolType].length()){
-                //System.out.println(resultStr);
+                System.out.println("bEnd");
                 endPosition=i;
                 break;
             }
@@ -39,7 +39,7 @@ public class BooleanStringDFA {
             if(ch==booleanType[symbolType].charAt(bTypeIndex++)) {
                 resultStr += ch;
             } else{
-                //System.out.println("Berror");
+                System.out.println("middleBerror");
                 endPosition=startPosition;
                 break;
             }

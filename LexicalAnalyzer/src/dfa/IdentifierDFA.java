@@ -27,7 +27,7 @@ public class IdentifierDFA {
             char ch = inputStr.charAt(i);
             int symbolType = inputSymbolType(ch);
             if (symbolType == 'E') {
-                //System.out.println("error");
+                System.out.println("iEnd");
                 //System.out.println(resultStr);
                 //endPosition=startPosition;
                 break;

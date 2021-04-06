@@ -25,12 +25,12 @@ public class VariableTypeDFA {
                 symbolType=inputSymbolType(ch);
             }
             if(symbolType=='E'){
-                //System.out.println("Verror");
+                System.out.println("startVerror");
                 endPosition=startPosition;
                 break;
             }
             if(vTypeIndex>=variableType[symbolType].length()){
-                //System.out.println(resultStr);
+                System.out.println("vEnd");
                 endPosition=i;
                 break;
             }
@@ -38,7 +38,7 @@ public class VariableTypeDFA {
             if(ch==variableType[symbolType].charAt(vTypeIndex++)) {
                 resultStr += ch;
             } else{
-                //System.out.println("Verror");
+                System.out.println("middleVerror");
                 endPosition=startPosition;
                 break;
             }
