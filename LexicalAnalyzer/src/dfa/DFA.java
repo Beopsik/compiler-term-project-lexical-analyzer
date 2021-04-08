@@ -115,6 +115,9 @@ public class DFA {
                     state[k]=0;
                 }
                 i--;
+            }else if(i==inputstr.length()-1){
+                Lexeme result=liveDFAList.get(0);
+                System.out.println("<"+result.getKey()+", "+result.getValue()+">");
             }
         }
     }
@@ -336,8 +339,10 @@ public class DFA {
             lexemes[SINGLECAHRACTER].setLive(false);
             return;
         }
-        resultStr += ch;
-        lexemes[SINGLECAHRACTER].addValue(ch);
+        if(ch!='\''){
+            resultStr += ch;
+            lexemes[SINGLECAHRACTER].addValue(ch);
+        }
     }
 
     public void literalStringDFA(int position) {
@@ -365,8 +370,10 @@ public class DFA {
             lexemes[LITERALSTRING].setLive(false);
             return;
         }
-        resultStr += ch;
-        lexemes[LITERALSTRING].addValue(ch);
+        if(ch!='\"') {
+            resultStr += ch;
+            lexemes[LITERALSTRING].addValue(ch);
+        }
     }
 
     public void signedIntegerDFA(int position) {
