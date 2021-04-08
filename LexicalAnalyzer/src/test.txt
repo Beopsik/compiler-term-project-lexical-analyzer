@@ -1,1 +1,1 @@
-\t
+int main(){ String name="Beob Sik"; }

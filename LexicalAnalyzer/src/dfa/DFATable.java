@@ -32,6 +32,7 @@ public class DFATable {
                 "{\"'\":5}"+
                 "{\"'\":5}"+
                 "{\"'\":5}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -49,6 +50,7 @@ public class DFATable {
                 "{\"double quotes\":5, \"digit\":2, \"letter\": 3, \"blank\":4}"+
                 "{\"double quotes\":5, \"digit\":2, \"letter\": 3, \"blank\":4}"+
                 "{\"double quotes\":5, \"digit\":2, \"letter\": 3, \"blank\":4}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -65,6 +67,7 @@ public class DFATable {
                 "{\"digit\":3}"+
                 "{\"positive\":1}"+
                 "{\"digit\":3}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -85,6 +88,7 @@ public class DFATable {
                 "{\"l\":6}"+
                 "{\"s\":7}"+
                 "{\"e\":8}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -115,6 +119,7 @@ public class DFATable {
                 "{\"u\":16}"+
                 "{\"r\":17}"+
                 "{\"n\":18}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -144,6 +149,7 @@ public class DFATable {
                 "{\"i\":15}"+
                 "{\"n\":16}"+
                 "{\"g\":17}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -157,6 +163,7 @@ public class DFATable {
     public JSONArray arithmeticOperatorDFATable(){
         String dfaTable="[" +
                 "{\"+\":1, \"-\":1, \"*\":1, \"/\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -170,6 +177,7 @@ public class DFATable {
     public JSONArray assginmentOperatorDFATable(){
         String dfaTable="[" +
                 "{\"=\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -183,6 +191,7 @@ public class DFATable {
     public JSONArray terminateSymbolDFATable(){
         String dfaTable="[" +
                 "{\";\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -196,6 +205,7 @@ public class DFATable {
     public JSONArray lParenDFATable(){
         String dfaTable="[" +
                 "{\"(\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -209,6 +219,7 @@ public class DFATable {
     public JSONArray rParenDFATable(){
         String dfaTable="[" +
                 "{\")\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -222,6 +233,7 @@ public class DFATable {
     public JSONArray lBraceDFATable(){
         String dfaTable="[" +
                 "{\"{\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -235,6 +247,7 @@ public class DFATable {
     public JSONArray rBraceDFATable(){
         String dfaTable="[" +
                 "{\"}\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -248,6 +261,7 @@ public class DFATable {
     public JSONArray lBranketDFATable(){
         String dfaTable="[" +
                 "{\"[\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -261,6 +275,7 @@ public class DFATable {
     public JSONArray rBranketDFATable(){
         String dfaTable="[" +
                 "{\"]\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -274,6 +289,7 @@ public class DFATable {
     public JSONArray commaDFATable(){
         String dfaTable="[" +
                 "{\",\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
@@ -287,6 +303,7 @@ public class DFATable {
     public JSONArray whiteSpaceDFATable(){
         String dfaTable="[" +
                 "{\" \":1, \"\t\":1, \"\n\":1}"+
+                "{}"+
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
