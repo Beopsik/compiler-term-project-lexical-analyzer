@@ -188,6 +188,24 @@ public class DFATable {
             return null;
         }
     }
+    public JSONArray ComparisonOperatorDFATable(){
+        String dfaTable="[" +
+                "{\"=\":1, \"!\":2, \"<\":3, \">\":4}"+
+                "{\"=\":5}"+
+                "{\"=\":5}"+
+                "{\"=\":5}"+
+                "{\"=\":5}"+
+                "{}"+
+                "]";
+        JSONParser jsonParser=new JSONParser();
+        try {
+            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return dfaTableArray;
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
     public JSONArray terminateSymbolDFATable(){
         String dfaTable="[" +
                 "{\";\":1}"+

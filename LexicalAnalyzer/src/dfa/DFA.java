@@ -13,10 +13,11 @@ public class DFA {
     private String resultStr;
     private final DFATable dfaTable = new DFATable();
     private List<Lexeme> liveDFAList=new ArrayList<>();
-    private Lexeme[] lexemes=new Lexeme[18];
-    private int[] state=new int[18];
+    private Lexeme[] lexemes=new Lexeme[19];
+    private int[] state=new int[19];
     private final JSONArray arithmeticOperatorDFATable = dfaTable.arithmeticOperatorDFATable();
     private final JSONArray assignmentOperatorDFATable = dfaTable.assginmentOperatorDFATable();
+    private final JSONArray comparisonOperatorDFATable=dfaTable.ComparisonOperatorDFATable();
     private final JSONArray terminateSymboleDFATable = dfaTable.terminateSymbolDFATable();
     private final JSONArray lParenDFATable = dfaTable.lParenDFATable();
     private final JSONArray rParenDFATable = dfaTable.rParenDFATable();
@@ -38,22 +39,23 @@ public class DFA {
 
     private final static int ARITHMETICOPERATOR=0;
     private final static int ASSIGNMENTOPERATOR=1;
-    private final static int TERMINATEOPERATOR=2;
-    private final static int LPAREN=3;
-    private final static int RPAREN=4;
-    private final static int LBRACE=5;
-    private final static int RBRACE=6;
-    private final static int LBRANKET=7;
-    private final static int RBRANKET=8;
-    private final static int COMMA=9;
-    private final static int SINGLECAHRACTER=10;
-    private final static int LITERALSTRING=11;
-    private final static int WHITESPACE=12;
-    private final static int SIGNEDINTEGER=13;
-    private final static int KEYWORD=14;
-    private final static int VARIABLETYPE=15;
-    private final static int BOOLEANSTRING=16;
-    private final static int IDENTIFIER=17;
+    private final static int COMPARISONOPERATOR=2;
+    private final static int TERMINATEOPERATOR=3;
+    private final static int LPAREN=4;
+    private final static int RPAREN=5;
+    private final static int LBRACE=6;
+    private final static int RBRACE=7;
+    private final static int LBRANKET=8;
+    private final static int RBRANKET=9;
+    private final static int COMMA=10;
+    private final static int SINGLECAHRACTER=11;
+    private final static int LITERALSTRING=12;
+    private final static int WHITESPACE=13;
+    private final static int SIGNEDINTEGER=14;
+    private final static int KEYWORD=15;
+    private final static int VARIABLETYPE=16;
+    private final static int BOOLEANSTRING=17;
+    private final static int IDENTIFIER=18;
 
     public DFA(String inputstr, int postion) {
         this.inputstr = inputstr;
@@ -71,6 +73,7 @@ public class DFA {
 
             arithmeticOperatorDFA(i);
             assignmentOperatorDFA(i);
+            comparsionOperatorDFA(i);
             terminateSymbolDFA(i);
             lParenDFA(i);
             rParenDFA(i);
@@ -140,6 +143,27 @@ public class DFA {
         }
         resultStr+=ch;
         lexemes[ARITHMETICOPERATOR].addValue(ch);
+    }
+    public void comparsionOperatorDFA(int position){
+        boolean comparisonOperatorDFALive=true;
+        lexemes[COMPARISONOPERATOR].setKey("COMPARISONOPERATOR");
+        //int state=0;
+        resultStr="";
+
+        char ch=inputstr.charAt(position);
+        String symbolType;
+
+        JSONObject transition=(JSONObject)comparisonOperatorDFATable.get(state[COMPARISONOPERATOR]);
+        try {
+            state[COMPARISONOPERATOR] = Integer.parseInt(transition.get(Character.toString(ch)).toString());
+        }catch (NullPointerException e){
+            symbolType="E";
+            comparisonOperatorDFALive=false;
+            lexemes[COMPARISONOPERATOR].setLive(false);
+            return;
+        }
+        resultStr+=ch;
+        lexemes[COMPARISONOPERATOR].addValue(ch);
     }
     public void assignmentOperatorDFA(int position){
         boolean assignmnetOperatorDFALive=true;

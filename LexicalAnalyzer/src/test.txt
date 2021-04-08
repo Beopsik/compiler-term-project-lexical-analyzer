@@ -1,1 +1,22 @@
-int main(){ String name="Beob Sik"; }
+int main(){
+    String my_name="BeoB Sik 11";
+    char sex='m';
+    int age=24;
+    boolean married=false;
+
+    if(married!=false){
+            printf("married");
+    }
+    else{
+        printf("no married");
+    }
+    
+    if(age<=24){
+        printf("young");
+    }else{
+        printf("old");
+    }
+    }
+    []
+    ,
+}
