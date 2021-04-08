@@ -31,6 +31,14 @@ public class DFA {
     private final JSONArray booleanStringDFATable = dfaTable.booleanStringDFATable();
     private final JSONArray indentifierDFATable = dfaTable.identifierDFATable();
 
+    private final String inputstr;
+    private final int startPosition;
+
+    private final static int TOKEN_NUM=19;
+    private final List<Lexeme> liveDFAList=new ArrayList<>();
+    private final Lexeme[] lexemes=new Lexeme[TOKEN_NUM];
+    private final int[] state=new int[TOKEN_NUM];
+
     private final static int ARITHMETICOPERATOR=0;
     private final static int ASSIGNMENTOPERATOR=1;
     private final static int COMPARISONOPERATOR=2;
@@ -50,14 +58,6 @@ public class DFA {
     private final static int VARIABLETYPE=16;
     private final static int BOOLEANSTRING=17;
     private final static int IDENTIFIER=18;
-
-    private final String inputstr;
-    private final int startPosition;
-
-    private final static int TOKEN_NUM=19;
-    private final List<Lexeme> liveDFAList=new ArrayList<>();
-    private final Lexeme[] lexemes=new Lexeme[TOKEN_NUM];
-    private final int[] state=new int[TOKEN_NUM];
 
     public DFA(String inputstr, int postion) {
         this.inputstr = inputstr;
