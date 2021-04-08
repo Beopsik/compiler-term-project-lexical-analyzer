@@ -4,7 +4,7 @@ import java.io.*;
 
 public class LexicalAnalyzer {
 
-    private File file;
+    private final File file;
 
     public LexicalAnalyzer(File file) {
         this.file = file;

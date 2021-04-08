@@ -18,8 +18,8 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            //JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -36,8 +36,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -54,8 +53,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -71,8 +69,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -92,8 +89,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -123,8 +119,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -153,8 +148,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -167,8 +161,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -181,8 +174,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -199,8 +191,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -213,8 +204,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -227,8 +217,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -241,8 +230,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -255,8 +243,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -269,8 +256,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -283,8 +269,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -297,8 +282,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -311,8 +295,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
@@ -325,8 +308,7 @@ public class DFATable {
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
-            return dfaTableArray;
+            return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;

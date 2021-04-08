@@ -7,13 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DFA {
-    private final String inputstr;
-    private int startPosition;
-    private String resultStr;
     private final DFATable dfaTable = new DFATable();
-    private List<Lexeme> liveDFAList=new ArrayList<>();
-    private Lexeme[] lexemes=new Lexeme[19];
-    private int[] state=new int[19];
+
     private final JSONArray arithmeticOperatorDFATable = dfaTable.arithmeticOperatorDFATable();
     private final JSONArray assignmentOperatorDFATable = dfaTable.assginmentOperatorDFATable();
     private final JSONArray comparisonOperatorDFATable=dfaTable.ComparisonOperatorDFATable();
@@ -56,16 +51,45 @@ public class DFA {
     private final static int BOOLEANSTRING=17;
     private final static int IDENTIFIER=18;
 
+    private final String inputstr;
+    private final int startPosition;
+
+    private final static int TOKEN_NUM=19;
+    private final List<Lexeme> liveDFAList=new ArrayList<>();
+    private final Lexeme[] lexemes=new Lexeme[TOKEN_NUM];
+    private final int[] state=new int[TOKEN_NUM];
+
     public DFA(String inputstr, int postion) {
         this.inputstr = inputstr;
         this.startPosition = postion;
     }
-
+    public void lexemesInit(){
+        lexemes[ARITHMETICOPERATOR].setKey("ARITHMETICOPERATOR");
+        lexemes[COMPARISONOPERATOR].setKey("COMPARISONOPERATOR");
+        lexemes[ASSIGNMENTOPERATOR].setKey("ASSIGNMENTOPERATOR");
+        lexemes[TERMINATEOPERATOR].setKey("TERMINATESYMBOL");
+        lexemes[LPAREN].setKey("LPAREN");
+        lexemes[RPAREN].setKey("RPAREN");
+        lexemes[LBRACE].setKey("LBRACE");
+        lexemes[RBRACE].setKey("RBRACE");
+        lexemes[LBRANKET].setKey("LBRANKET");
+        lexemes[RBRANKET].setKey("RBRANKET");
+        lexemes[COMMA].setKey("COMMA");
+        lexemes[WHITESPACE].setKey("WHITESPACE");
+        lexemes[SINGLECAHRACTER].setKey("SINGLECHARACTER");
+        lexemes[LITERALSTRING].setKey("LITERALSTRING");
+        lexemes[SIGNEDINTEGER].setKey("SIGNEDINTEGER");
+        lexemes[KEYWORD].setKey("KEYWORD");
+        lexemes[VARIABLETYPE].setKey("VARIABLETYPE");
+        lexemes[BOOLEANSTRING].setKey("BOOLEANSTRING");
+        lexemes[IDENTIFIER].setKey("IDENTIFIER");
+    }
     public void run() {
-        System.out.println(lexemes.length);
+        //System.out.println(lexemes.length);
         for(int i=0; i<lexemes.length; i++){
             lexemes[i]=new Lexeme();
         }
+        lexemesInit();
         for(int i=startPosition; i<inputstr.length(); i++) {
 
             arithmeticOperatorDFA(i);
@@ -89,16 +113,17 @@ public class DFA {
             variableTypeDFA(i);
             booleanStringDFA(i);
             identifierDFA(i);
+
             boolean liveDFAListClear=true;
             boolean liveDFA=false;
-            for (int j=0; j<lexemes.length; j++){
-                if(lexemes[j].getLive()){
-                    if(liveDFAListClear){
+            for (Lexeme lexeme : lexemes) {
+                if (lexeme.getLive()) {
+                    if (liveDFAListClear) {
                         liveDFAList.clear();
-                        liveDFAListClear=false;
-                        liveDFA=true;
+                        liveDFAListClear = false;
+                        liveDFA = true;
                     }
-                    liveDFAList.add(lexemes[j]);
+                    liveDFAList.add(lexeme);
                     //System.out.println("<"+lexemes[j].getKey()+", "+lexemes[j].getValue()+">");
                 }
             }
@@ -123,9 +148,6 @@ public class DFA {
     }
 
     public void arithmeticOperatorDFA(int position){
-        lexemes[ARITHMETICOPERATOR].setKey("ARITHMETICOPERATOR");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)arithmeticOperatorDFATable.get(state[ARITHMETICOPERATOR]);
@@ -135,13 +157,9 @@ public class DFA {
             lexemes[ARITHMETICOPERATOR].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[ARITHMETICOPERATOR].addValue(ch);
     }
     public void comparsionOperatorDFA(int position){
-        lexemes[COMPARISONOPERATOR].setKey("COMPARISONOPERATOR");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)comparisonOperatorDFATable.get(state[COMPARISONOPERATOR]);
@@ -151,13 +169,9 @@ public class DFA {
             lexemes[COMPARISONOPERATOR].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[COMPARISONOPERATOR].addValue(ch);
     }
     public void assignmentOperatorDFA(int position){
-        lexemes[ASSIGNMENTOPERATOR].setKey("ASSIGNMENTOPERATOR");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)assignmentOperatorDFATable.get(state[ASSIGNMENTOPERATOR]);
@@ -167,13 +181,9 @@ public class DFA {
             lexemes[ASSIGNMENTOPERATOR].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[ASSIGNMENTOPERATOR].addValue(ch);
     }
     public void terminateSymbolDFA(int position){
-        lexemes[TERMINATEOPERATOR].setKey("TERMINATESYMBOL");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)terminateSymboleDFATable.get(state[TERMINATEOPERATOR]);
@@ -183,13 +193,9 @@ public class DFA {
             lexemes[TERMINATEOPERATOR].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[TERMINATEOPERATOR].addValue(ch);
     }
     public void lParenDFA(int position){
-        lexemes[LPAREN].setKey("LPAREN");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)lParenDFATable.get(state[LPAREN]);
@@ -199,13 +205,9 @@ public class DFA {
             lexemes[LPAREN].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[LPAREN].addValue(ch);
     }
     public void rParenDFA(int position){
-        lexemes[RPAREN].setKey("RPAREN");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)rParenDFATable.get(state[RPAREN]);
@@ -215,13 +217,9 @@ public class DFA {
             lexemes[RPAREN].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[RPAREN].addValue(ch);
     }
     public void lBraceDFA(int position){
-        lexemes[LBRACE].setKey("LBRACE");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)lBraceDFATable.get(state[LBRACE]);
@@ -231,13 +229,9 @@ public class DFA {
             lexemes[LBRACE].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[LBRACE].addValue(ch);
     }
     public void rBraceDFA(int position){
-        lexemes[RBRACE].setKey("RBRACE");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)rBraceDFATAble.get(state[RBRACE]);
@@ -247,13 +241,9 @@ public class DFA {
             lexemes[RBRACE].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[RBRACE].addValue(ch);
     }
     public void lBranketDFA(int position){
-        lexemes[LBRANKET].setKey("LBRANKET");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)lBranketDFATable.get(state[LBRANKET]);
@@ -263,13 +253,9 @@ public class DFA {
             lexemes[LBRANKET].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[LBRANKET].addValue(ch);
     }
     public void rBranketDFA(int position){
-        lexemes[RBRANKET].setKey("RBRANKET");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)rBranketDFATable.get(state[RBRANKET]);
@@ -279,13 +265,9 @@ public class DFA {
             lexemes[RBRANKET].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[RBRANKET].addValue(ch);
     }
     public void commaDFA(int position){
-        lexemes[COMMA].setKey("COMMA");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)commaDFATable.get(state[COMMA]);
@@ -295,13 +277,9 @@ public class DFA {
             lexemes[COMMA].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[COMMA].addValue(ch);
     }
     public void whiteSpaceDFA(int position){
-        lexemes[WHITESPACE].setKey("WHITESPACE");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)whiteSpaceDFATable.get(state[WHITESPACE]);
@@ -311,17 +289,15 @@ public class DFA {
             lexemes[WHITESPACE].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[WHITESPACE].addValue(ch);
     }
 
     public void singleCharacterDFA(int position) {
-        lexemes[SINGLECAHRACTER].setKey("SINGLECHARACTER");
-
         char ch = inputstr.charAt(position);
+
         String symbolType;
         if (ch == '\'')
-            symbolType = "\'";
+            symbolType = "'";
         else if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
             symbolType = "letter";
         else if (ch >= '0' && ch <= '9')
@@ -340,16 +316,13 @@ public class DFA {
             return;
         }
         if(ch!='\''){
-            resultStr += ch;
             lexemes[SINGLECAHRACTER].addValue(ch);
         }
     }
 
     public void literalStringDFA(int position) {
-        lexemes[LITERALSTRING].setKey("LITERALSTRING");
-        resultStr = "";
-
         char ch = inputstr.charAt(position);
+
         String symbolType;
         if (ch == '\"')
             symbolType = "double quotes";
@@ -371,16 +344,13 @@ public class DFA {
             return;
         }
         if(ch!='\"') {
-            resultStr += ch;
             lexemes[LITERALSTRING].addValue(ch);
         }
     }
 
     public void signedIntegerDFA(int position) {
-        lexemes[SIGNEDINTEGER].setKey("SIGNEDINTEGER");
-        resultStr = "";
-
         char ch = inputstr.charAt(position);
+
         String symbolType;
         if ((ch >= '1' && ch <= '9') && (state[SIGNEDINTEGER] == 0 || state[SIGNEDINTEGER] == 2))
             symbolType = "positive";
@@ -402,14 +372,10 @@ public class DFA {
             lexemes[SIGNEDINTEGER].setLive(false);
             return;
         }
-        resultStr += ch;
         lexemes[SIGNEDINTEGER].addValue(ch);
     }
 
     public void keywordDFA(int position){
-        lexemes[KEYWORD].setKey("KEYWORD");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)keywordDFATable.get(state[KEYWORD]);
@@ -419,13 +385,9 @@ public class DFA {
             lexemes[KEYWORD].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[KEYWORD].addValue(ch);
     }
     public void variableTypeDFA(int position){
-        lexemes[VARIABLETYPE].setKey("VARIABLETYPE");
-        resultStr="";
-
         char ch=inputstr.charAt(position);
 
         JSONObject transition=(JSONObject)variableTypeDFATable.get(state[VARIABLETYPE]);
@@ -435,13 +397,9 @@ public class DFA {
             lexemes[VARIABLETYPE].setLive(false);
             return;
         }
-        resultStr+=ch;
         lexemes[VARIABLETYPE].addValue(ch);
     }
     public void booleanStringDFA(int position) {
-        lexemes[BOOLEANSTRING].setKey("BOOLEANSTRING");
-        resultStr = "";
-
         char ch = inputstr.charAt(position);
 
         JSONObject transition = (JSONObject) booleanStringDFATable.get(state[BOOLEANSTRING]);
@@ -451,15 +409,11 @@ public class DFA {
             lexemes[BOOLEANSTRING].setLive(false);
             return;
         }
-        resultStr += ch;
         lexemes[BOOLEANSTRING].addValue(ch);
-
     }
     public void identifierDFA(int position) {
-        lexemes[IDENTIFIER].setKey("IDENTIFIER");
-        resultStr = "";
-
         char ch = inputstr.charAt(position);
+
         String symbolType;
         if (ch == '_')
             symbolType = "_";
@@ -479,10 +433,6 @@ public class DFA {
             lexemes[IDENTIFIER].setLive(false);
             return;
         }
-        resultStr += ch;
         lexemes[IDENTIFIER].addValue(ch);
-    }
-    public String getResultStr(){
-        return resultStr;
     }
 }
