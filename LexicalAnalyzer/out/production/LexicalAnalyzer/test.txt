@@ -10,7 +10,7 @@ int main(){
     else{
         printf("no married");
     }
-    
+
     if(age<=24){
         printf("young");
     }else{

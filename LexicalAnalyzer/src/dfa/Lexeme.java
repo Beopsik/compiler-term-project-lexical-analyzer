@@ -3,7 +3,6 @@ package dfa;
 public class Lexeme {
     private String key;
     private String value="";
-    private int endPosition;
     boolean live=true;
 
     public Lexeme(){
@@ -23,9 +22,6 @@ public class Lexeme {
     }
     public String getValue(){
         return value;
-    }
-    public int getEndPosition(){
-        return endPosition;
     }
     public void setLive(boolean b){
         live=b;
