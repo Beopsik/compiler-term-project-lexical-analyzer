@@ -39,7 +39,6 @@ public class DFA {
     private final static int TOKEN_NUM=19;
     private final List<Lexeme> liveDFAList=new ArrayList<>();
     private final Lexeme[] lexemes=new Lexeme[TOKEN_NUM];
-    private final int[] state=new int[TOKEN_NUM];
     private final State[] _state=new State[TOKEN_NUM];
 
     private final static int ARITHMETICOPERATOR=0;
@@ -181,7 +180,7 @@ public class DFA {
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)arithmeticOperatorDFATable.get(state[ARITHMETICOPERATOR]);
+        JSONObject transition=(JSONObject)arithmeticOperatorDFATable.get(_state[ARITHMETICOPERATOR].getStateLocation());
         try {
 
             _state[ARITHMETICOPERATOR].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
@@ -455,13 +454,13 @@ public class DFA {
         char ch = inputstr.charAt(position);
 
         String symbolType;
-        if ((ch >= '1' && ch <= '9') && (state[SIGNEDINTEGER] == 0 || state[SIGNEDINTEGER] == 2))
+        if ((ch >= '1' && ch <= '9') && (_state[SIGNEDINTEGER].getStateLocation() == 0 || _state[SIGNEDINTEGER].getStateLocation() == 2))
             symbolType = "positive";
-        else if ((ch >= '0' && ch <= '9') && (state[SIGNEDINTEGER] == 1 || state[SIGNEDINTEGER] == 3))
+        else if ((ch >= '0' && ch <= '9') && (_state[SIGNEDINTEGER].getStateLocation() == 1 || _state[SIGNEDINTEGER].getStateLocation() == 3))
             symbolType = "digit";
         else if (ch == '-')
             symbolType = "-";
-        else if (ch == '0' && state[SIGNEDINTEGER] == 0)
+        else if (ch == '0' && _state[SIGNEDINTEGER].getStateLocation() == 0)
             symbolType = "0";
         else {
             _state[SIGNEDINTEGER].setExistNextState(false);
