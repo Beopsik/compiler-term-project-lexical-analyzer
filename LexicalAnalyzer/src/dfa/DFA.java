@@ -3,7 +3,6 @@ package dfa;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.management.remote.rmi.RMIConnectionImpl_Stub;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +36,8 @@ public class DFA {
 
     private String beforeToken="";
     private final static int TOKEN_NUM=19;
-    private final List<Lexeme> tokenList=new ArrayList<>();
-    private final Lexeme[] lexemes=new Lexeme[TOKEN_NUM];
+    private final List<Token> tokenList=new ArrayList<>();
+    private final Token[] token=new Token[TOKEN_NUM];
     private final State[] state=new State[TOKEN_NUM];
 
     private final static int ARITHMETICOPERATOR=0;
@@ -65,37 +64,37 @@ public class DFA {
         this.inputstr = inputstr;
         this.startPosition = postion;
     }
-    public void lexemesInit(){
-        lexemes[ARITHMETICOPERATOR].setKey("ARITHMETICOPERATOR");
-        lexemes[COMPARISONOPERATOR].setKey("COMPARISONOPERATOR");
-        lexemes[ASSIGNMENTOPERATOR].setKey("ASSIGNMENTOPERATOR");
-        lexemes[TERMINATEOPERATOR].setKey("TERMINATESYMBOL");
-        lexemes[LPAREN].setKey("LPAREN");
-        lexemes[RPAREN].setKey("RPAREN");
-        lexemes[LBRACE].setKey("LBRACE");
-        lexemes[RBRACE].setKey("RBRACE");
-        lexemes[LBRANKET].setKey("LBRANKET");
-        lexemes[RBRANKET].setKey("RBRANKET");
-        lexemes[COMMA].setKey("COMMA");
-        lexemes[WHITESPACE].setKey("WHITESPACE");
-        lexemes[SINGLECAHRACTER].setKey("SINGLECHARACTER");
-        lexemes[LITERALSTRING].setKey("LITERALSTRING");
-        lexemes[SIGNEDINTEGER].setKey("SIGNEDINTEGER");
-        lexemes[KEYWORD].setKey("KEYWORD");
-        lexemes[VARIABLETYPE].setKey("VARIABLETYPE");
-        lexemes[BOOLEANSTRING].setKey("BOOLEANSTRING");
-        lexemes[IDENTIFIER].setKey("IDENTIFIER");
+    public void tokenInit(){
+        token[ARITHMETICOPERATOR].setKey("ARITHMETICOPERATOR");
+        token[COMPARISONOPERATOR].setKey("COMPARISONOPERATOR");
+        token[ASSIGNMENTOPERATOR].setKey("ASSIGNMENTOPERATOR");
+        token[TERMINATEOPERATOR].setKey("TERMINATESYMBOL");
+        token[LPAREN].setKey("LPAREN");
+        token[RPAREN].setKey("RPAREN");
+        token[LBRACE].setKey("LBRACE");
+        token[RBRACE].setKey("RBRACE");
+        token[LBRANKET].setKey("LBRANKET");
+        token[RBRANKET].setKey("RBRANKET");
+        token[COMMA].setKey("COMMA");
+        token[WHITESPACE].setKey("WHITESPACE");
+        token[SINGLECAHRACTER].setKey("SINGLECHARACTER");
+        token[LITERALSTRING].setKey("LITERALSTRING");
+        token[SIGNEDINTEGER].setKey("SIGNEDINTEGER");
+        token[KEYWORD].setKey("KEYWORD");
+        token[VARIABLETYPE].setKey("VARIABLETYPE");
+        token[BOOLEANSTRING].setKey("BOOLEANSTRING");
+        token[IDENTIFIER].setKey("IDENTIFIER");
     }
     public void run() {
-        //System.out.println(lexemes.length);
-        for(int i=0; i<lexemes.length; i++){
-            lexemes[i]=new Lexeme();
+        //System.out.println(token.length);
+        for(int i=0; i<token.length; i++){
+            token[i]=new Token();
             state[i]=new State();
         }
-        lexemesInit();
+        tokenInit();
         for(int i=startPosition; i<inputstr.length(); i++) {
             /*if(Error){
-                Lexeme error=tokenList.get(0);
+                Token error=tokenList.get(0);
                 System.out.println("Occured Error");
                 System.out.println(error.getValue());
             }*/
@@ -123,7 +122,7 @@ public class DFA {
 
             boolean TokenListClear=true;
             boolean recognizeDFA=false;
-            for (int j=0; j<lexemes.length; j++) {
+            for (int j=0; j<token.length; j++) {
                 if (state[j].getExistNextState()) {
                     if (TokenListClear) {
                         tokenList.clear();
@@ -131,19 +130,19 @@ public class DFA {
                         recognizeDFA = true;
                     }
                     if (state[j].getIsFinalState()) {
-                        if (lexemes[j].getValue().equals("-") && (beforeToken.equals("IDENTIFIER") || beforeToken.equals("SIGNEDINTEGER"))) {
-                            tokenList.add(lexemes[j]);
+                        if (token[j].getValue().equals("-") && (beforeToken.equals("IDENTIFIER") || beforeToken.equals("SIGNEDINTEGER"))) {
+                            tokenList.add(token[j]);
                             state[SIGNEDINTEGER].setExistNextState(false);
                         } else {
-                            tokenList.add(lexemes[j]);
+                            tokenList.add(token[j]);
                         }
-                        //System.out.println("<"+lexemes[j].getKey()+", "+lexemes[j].getValue()+">");
+                        //System.out.println("<"+token[j].getKey()+", "+token[j].getValue()+">");
                     }
                 }
             }
             if(!recognizeDFA){
                 /*for (int k=0; k<tokenList.size(); k++){
-                    Lexeme result=tokenList.get(k);
+                    Token result=tokenList.get(k);
                     System.out.println("<"+result.getKey()+", "+result.getValue()+">");
                 }*/
                 //System.out.println("-------------------------------");
@@ -151,12 +150,12 @@ public class DFA {
                     System.out.println("Occured error at "+inputstr.charAt(i));
                     return;
                 }else {
-                    Lexeme result = tokenList.get(0);
+                    Token result = tokenList.get(0);
                     beforeToken=result.getKey();
                     //System.out.println(beforeToken);
                     System.out.println("<" + result.getKey() + ", " + result.getValue() + ">");
-                    for (int k = 0; k < lexemes.length; k++) {
-                        lexemes[k].lexemeClear();
+                    for (int k = 0; k < token.length; k++) {
+                        token[k].tokenClear();
                         state[k].clear();
                     }
                     i--;
@@ -166,7 +165,7 @@ public class DFA {
                     System.out.println("Occured error at "+inputstr.charAt(i));
                     return;
                 }else {
-                    Lexeme result = tokenList.get(0);
+                    Token result = tokenList.get(0);
                     beforeToken=result.getKey();
                     System.out.println("<" + result.getKey() + ", " + result.getValue() + ">");
                 }
@@ -190,7 +189,7 @@ public class DFA {
             state[ARITHMETICOPERATOR].setExistNextState(false);
             return;
         }
-        lexemes[ARITHMETICOPERATOR].addValue(ch);
+        token[ARITHMETICOPERATOR].addValue(ch);
     }
     public void comparsionOperatorDFA(int position){
         if(!state[COMPARISONOPERATOR].getExistNextState())
@@ -208,7 +207,7 @@ public class DFA {
             state[COMPARISONOPERATOR].setExistNextState(false);
             return;
         }
-        lexemes[COMPARISONOPERATOR].addValue(ch);
+        token[COMPARISONOPERATOR].addValue(ch);
     }
     public void assignmentOperatorDFA(int position){
         if(!state[ASSIGNMENTOPERATOR].getExistNextState())
@@ -225,7 +224,7 @@ public class DFA {
             state[ASSIGNMENTOPERATOR].setExistNextState(false);
             return;
         }
-        lexemes[ASSIGNMENTOPERATOR].addValue(ch);
+        token[ASSIGNMENTOPERATOR].addValue(ch);
     }
     public void terminateSymbolDFA(int position){
         if(!state[TERMINATEOPERATOR].getExistNextState())
@@ -242,7 +241,7 @@ public class DFA {
             state[TERMINATEOPERATOR].setExistNextState(false);
             return;
         }
-        lexemes[TERMINATEOPERATOR].addValue(ch);
+        token[TERMINATEOPERATOR].addValue(ch);
     }
     public void lParenDFA(int position){
         if(!state[LPAREN].getExistNextState())
@@ -259,7 +258,7 @@ public class DFA {
             state[LPAREN].setExistNextState(false);
             return;
         }
-        lexemes[LPAREN].addValue(ch);
+        token[LPAREN].addValue(ch);
     }
     public void rParenDFA(int position){
         if(!state[RPAREN].getExistNextState())
@@ -276,7 +275,7 @@ public class DFA {
             state[RPAREN].setExistNextState(false);
             return;
         }
-        lexemes[RPAREN].addValue(ch);
+        token[RPAREN].addValue(ch);
     }
     public void lBraceDFA(int position){
         if(!state[LBRACE].getExistNextState())
@@ -293,7 +292,7 @@ public class DFA {
             state[LBRACE].setExistNextState(false);
             return;
         }
-        lexemes[LBRACE].addValue(ch);
+        token[LBRACE].addValue(ch);
     }
     public void rBraceDFA(int position){
         if(!state[RBRACE].getExistNextState())
@@ -310,7 +309,7 @@ public class DFA {
             state[RBRACE].setExistNextState(false);
             return;
         }
-        lexemes[RBRACE].addValue(ch);
+        token[RBRACE].addValue(ch);
     }
     public void lBranketDFA(int position){
         if(!state[LBRANKET].getExistNextState())
@@ -327,7 +326,7 @@ public class DFA {
             state[LBRANKET].setExistNextState(false);
             return;
         }
-        lexemes[LBRANKET].addValue(ch);
+        token[LBRANKET].addValue(ch);
     }
     public void rBranketDFA(int position){
         if(!state[RBRANKET].getExistNextState())
@@ -344,7 +343,7 @@ public class DFA {
             state[RBRANKET].setExistNextState(false);
             return;
         }
-        lexemes[RBRANKET].addValue(ch);
+        token[RBRANKET].addValue(ch);
     }
     public void commaDFA(int position){
         if(!state[COMMA].getExistNextState())
@@ -361,7 +360,7 @@ public class DFA {
             state[COMMA].setExistNextState(false);
             return;
         }
-        lexemes[COMMA].addValue(ch);
+        token[COMMA].addValue(ch);
     }
     public void whiteSpaceDFA(int position){
         if(!state[WHITESPACE].getExistNextState())
@@ -378,7 +377,7 @@ public class DFA {
             state[WHITESPACE].setExistNextState(false);
             return;
         }
-        lexemes[WHITESPACE].addValue(ch);
+        token[WHITESPACE].addValue(ch);
     }
 
     public void singleCharacterDFA(int position) {
@@ -410,7 +409,7 @@ public class DFA {
             return;
         }
         if(ch!='\''){
-            lexemes[SINGLECAHRACTER].addValue(ch);
+            token[SINGLECAHRACTER].addValue(ch);
         }
     }
 
@@ -443,7 +442,7 @@ public class DFA {
             return;
         }
         if(ch!='\"') {
-            lexemes[LITERALSTRING].addValue(ch);
+            token[LITERALSTRING].addValue(ch);
         }
     }
 
@@ -476,7 +475,7 @@ public class DFA {
             state[SIGNEDINTEGER].setExistNextState(false);
             return;
         }
-        lexemes[SIGNEDINTEGER].addValue(ch);
+        token[SIGNEDINTEGER].addValue(ch);
     }
 
     public void keywordDFA(int position){
@@ -494,7 +493,7 @@ public class DFA {
             state[KEYWORD].setExistNextState(false);
             return;
         }
-        lexemes[KEYWORD].addValue(ch);
+        token[KEYWORD].addValue(ch);
     }
     public void variableTypeDFA(int position){
         if(!state[VARIABLETYPE].getExistNextState())
@@ -511,7 +510,7 @@ public class DFA {
             state[VARIABLETYPE].setExistNextState(false);
             return;
         }
-        lexemes[VARIABLETYPE].addValue(ch);
+        token[VARIABLETYPE].addValue(ch);
     }
     public void booleanStringDFA(int position) {
         if(!state[BOOLEANSTRING].getExistNextState())
@@ -528,7 +527,7 @@ public class DFA {
             state[BOOLEANSTRING].setExistNextState(false);
             return;
         }
-        lexemes[BOOLEANSTRING].addValue(ch);
+        token[BOOLEANSTRING].addValue(ch);
     }
     public void identifierDFA(int position) {
         if(!state[IDENTIFIER].getExistNextState())
@@ -557,6 +556,6 @@ public class DFA {
             state[IDENTIFIER].setExistNextState(false);
             return;
         }
-        lexemes[IDENTIFIER].addValue(ch);
+        token[IDENTIFIER].addValue(ch);
     }
 }

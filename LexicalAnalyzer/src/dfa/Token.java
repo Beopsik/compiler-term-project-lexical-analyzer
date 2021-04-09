@@ -1,11 +1,11 @@
 package dfa;
 
-public class Lexeme {
+public class Token {
     private String key;
     private String value="";
-    public Lexeme(){
+    public Token(){
     }
-    public void lexemeClear(){
+    public void tokenClear(){
         this.value="";
     }
     public void addValue(char ch){
