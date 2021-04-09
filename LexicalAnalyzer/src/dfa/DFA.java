@@ -59,6 +59,7 @@ public class DFA {
     private final static int BOOLEANSTRING=17;
     private final static int IDENTIFIER=18;
 
+    private boolean Error=false;
     public DFA(String inputstr, int postion) {
         this.inputstr = inputstr;
         this.startPosition = postion;
@@ -91,7 +92,11 @@ public class DFA {
         }
         lexemesInit();
         for(int i=startPosition; i<inputstr.length(); i++) {
-
+            /*if(Error){
+                Lexeme error=liveDFAList.get(0);
+                System.out.println("Occured Error");
+                System.out.println(error.getValue());
+            }*/
             arithmeticOperatorDFA(i);
             assignmentOperatorDFA(i);
             comparsionOperatorDFA(i);
