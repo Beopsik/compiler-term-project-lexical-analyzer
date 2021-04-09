@@ -34,6 +34,7 @@ public class DFA {
     private final String inputstr;
     private final int startPosition;
 
+    private String beforeToken="";
     private final static int TOKEN_NUM=19;
     private final List<Lexeme> liveDFAList=new ArrayList<>();
     private final Lexeme[] lexemes=new Lexeme[TOKEN_NUM];
@@ -59,7 +60,6 @@ public class DFA {
     private final static int BOOLEANSTRING=17;
     private final static int IDENTIFIER=18;
 
-    private boolean Error=false;
     public DFA(String inputstr, int postion) {
         this.inputstr = inputstr;
         this.startPosition = postion;
@@ -128,8 +128,13 @@ public class DFA {
                         liveDFAListClear = false;
                         liveDFA = true;
                     }
-                    if(lexeme.getIsFinalState()) {
-                        liveDFAList.add(lexeme);
+                    if (lexeme.getIsFinalState()) {
+                        if (lexeme.getValue().equals("-") && (beforeToken.equals("IDENTIFIER") || beforeToken.equals("SIGNEDINTEGER"))) {
+                            liveDFAList.add(lexeme);
+                            lexemes[SIGNEDINTEGER].setLive(false);
+                        } else {
+                            liveDFAList.add(lexeme);
+                        }
                         //System.out.println("<"+lexemes[j].getKey()+", "+lexemes[j].getValue()+">");
                     }
                 }
@@ -141,10 +146,12 @@ public class DFA {
                 }*/
                 //System.out.println("-------------------------------");
                 if(liveDFAList.isEmpty()){
-                    System.out.println("Occured error at "+Character.toString(inputstr.charAt(i)));
+                    System.out.println("Occured error at "+inputstr.charAt(i));
                     return;
                 }else {
                     Lexeme result = liveDFAList.get(0);
+                    beforeToken=result.getKey();
+                    //System.out.println(beforeToken);
                     System.out.println("<" + result.getKey() + ", " + result.getValue() + ">");
                     for (int k = 0; k < lexemes.length; k++) {
                         lexemes[k].lexemeClear();
@@ -154,10 +161,12 @@ public class DFA {
                 }
             }else if(i==inputstr.length()-1){
                 if(liveDFAList.isEmpty()){
-                    System.out.println("Occured error at "+Character.toString(inputstr.charAt(i)));
+                    System.out.println("Occured error at "+inputstr.charAt(i));
                     return;
                 }else {
                     Lexeme result = liveDFAList.get(0);
+                    beforeToken=result.getKey();
+                    //System.out.println(beforeToken);
                     System.out.println("<" + result.getKey() + ", " + result.getValue() + ">");
                 }
             }
@@ -375,7 +384,7 @@ public class DFA {
             return;
 
         char ch = inputstr.charAt(position);
-        String symbolType="";
+        String symbolType;
 
         if (ch == '\'')
             symbolType = "'";
@@ -541,7 +550,7 @@ public class DFA {
         try {
             JSONObject transition = (JSONObject) indentifierDFATable.get(state[IDENTIFIER]);
             state[IDENTIFIER] = Integer.parseInt(transition.get(symbolType).toString());
-            if(!lexemes[IDENTIFIER].getIsFinalState()&&(state[IDENTIFIER]==3||state[IDENTIFIER]==4||state[IDENTIFIER]==5))
+            if(!lexemes[IDENTIFIER].getIsFinalState()&&(state[IDENTIFIER]==1||state[IDENTIFIER]==2||state[IDENTIFIER]==3||state[IDENTIFIER]==4||state[IDENTIFIER]==5))
                 lexemes[IDENTIFIER].setIsFinalState(true);
         }catch(NullPointerException e){
             lexemes[IDENTIFIER].setLive(false);
