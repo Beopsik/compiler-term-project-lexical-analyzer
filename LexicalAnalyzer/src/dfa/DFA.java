@@ -37,7 +37,7 @@ public class DFA {
 
     private String beforeToken="";
     private final static int TOKEN_NUM=19;
-    private final List<Lexeme> liveDFAList=new ArrayList<>();
+    private final List<Lexeme> tokenList=new ArrayList<>();
     private final Lexeme[] lexemes=new Lexeme[TOKEN_NUM];
     private final State[] state=new State[TOKEN_NUM];
 
@@ -95,7 +95,7 @@ public class DFA {
         lexemesInit();
         for(int i=startPosition; i<inputstr.length(); i++) {
             /*if(Error){
-                Lexeme error=liveDFAList.get(0);
+                Lexeme error=tokenList.get(0);
                 System.out.println("Occured Error");
                 System.out.println(error.getValue());
             }*/
@@ -121,37 +121,37 @@ public class DFA {
             booleanStringDFA(i);
             identifierDFA(i);
 
-            boolean liveDFAListClear=true;
-            boolean liveDFA=false;
+            boolean TokenListClear=true;
+            boolean recognizeDFA=false;
             for (int j=0; j<lexemes.length; j++) {
                 if (state[j].getExistNextState()) {
-                    if (liveDFAListClear) {
-                        liveDFAList.clear();
-                        liveDFAListClear = false;
-                        liveDFA = true;
+                    if (TokenListClear) {
+                        tokenList.clear();
+                        TokenListClear = false;
+                        recognizeDFA = true;
                     }
                     if (state[j].getIsFinalState()) {
                         if (lexemes[j].getValue().equals("-") && (beforeToken.equals("IDENTIFIER") || beforeToken.equals("SIGNEDINTEGER"))) {
-                            liveDFAList.add(lexemes[j]);
+                            tokenList.add(lexemes[j]);
                             state[SIGNEDINTEGER].setExistNextState(false);
                         } else {
-                            liveDFAList.add(lexemes[j]);
+                            tokenList.add(lexemes[j]);
                         }
                         //System.out.println("<"+lexemes[j].getKey()+", "+lexemes[j].getValue()+">");
                     }
                 }
             }
-            if(!liveDFA){
-                /*for (int k=0; k<liveDFAList.size(); k++){
-                    Lexeme result=liveDFAList.get(k);
+            if(!recognizeDFA){
+                /*for (int k=0; k<tokenList.size(); k++){
+                    Lexeme result=tokenList.get(k);
                     System.out.println("<"+result.getKey()+", "+result.getValue()+">");
                 }*/
                 //System.out.println("-------------------------------");
-                if(liveDFAList.isEmpty()){
+                if(tokenList.isEmpty()){
                     System.out.println("Occured error at "+inputstr.charAt(i));
                     return;
                 }else {
-                    Lexeme result = liveDFAList.get(0);
+                    Lexeme result = tokenList.get(0);
                     beforeToken=result.getKey();
                     //System.out.println(beforeToken);
                     System.out.println("<" + result.getKey() + ", " + result.getValue() + ">");
@@ -162,11 +162,11 @@ public class DFA {
                     i--;
                 }
             }else if(i==inputstr.length()-1){
-                if(liveDFAList.isEmpty()){
+                if(tokenList.isEmpty()){
                     System.out.println("Occured error at "+inputstr.charAt(i));
                     return;
                 }else {
-                    Lexeme result = liveDFAList.get(0);
+                    Lexeme result = tokenList.get(0);
                     beforeToken=result.getKey();
                     System.out.println("<" + result.getKey() + ", " + result.getValue() + ">");
                 }
