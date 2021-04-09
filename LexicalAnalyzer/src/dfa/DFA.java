@@ -39,7 +39,7 @@ public class DFA {
     private final static int TOKEN_NUM=19;
     private final List<Lexeme> liveDFAList=new ArrayList<>();
     private final Lexeme[] lexemes=new Lexeme[TOKEN_NUM];
-    private final State[] _state=new State[TOKEN_NUM];
+    private final State[] state=new State[TOKEN_NUM];
 
     private final static int ARITHMETICOPERATOR=0;
     private final static int ASSIGNMENTOPERATOR=1;
@@ -90,7 +90,7 @@ public class DFA {
         //System.out.println(lexemes.length);
         for(int i=0; i<lexemes.length; i++){
             lexemes[i]=new Lexeme();
-            _state[i]=new State();
+            state[i]=new State();
         }
         lexemesInit();
         for(int i=startPosition; i<inputstr.length(); i++) {
@@ -124,16 +124,16 @@ public class DFA {
             boolean liveDFAListClear=true;
             boolean liveDFA=false;
             for (int j=0; j<lexemes.length; j++) {
-                if (_state[j].getExistNextState()/*lexemes[j].getLive()*/) {
+                if (state[j].getExistNextState()) {
                     if (liveDFAListClear) {
                         liveDFAList.clear();
                         liveDFAListClear = false;
                         liveDFA = true;
                     }
-                    if (_state[j].getIsFinalState()) {
+                    if (state[j].getIsFinalState()) {
                         if (lexemes[j].getValue().equals("-") && (beforeToken.equals("IDENTIFIER") || beforeToken.equals("SIGNEDINTEGER"))) {
                             liveDFAList.add(lexemes[j]);
-                            _state[SIGNEDINTEGER].setExistNextState(false);
+                            state[SIGNEDINTEGER].setExistNextState(false);
                         } else {
                             liveDFAList.add(lexemes[j]);
                         }
@@ -157,7 +157,7 @@ public class DFA {
                     System.out.println("<" + result.getKey() + ", " + result.getValue() + ">");
                     for (int k = 0; k < lexemes.length; k++) {
                         lexemes[k].lexemeClear();
-                        _state[k].clear();
+                        state[k].clear();
                     }
                     i--;
                 }
@@ -175,214 +175,214 @@ public class DFA {
     }
 
     public void arithmeticOperatorDFA(int position){
-        if(!_state[ARITHMETICOPERATOR].getExistNextState())
+        if(!state[ARITHMETICOPERATOR].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)arithmeticOperatorDFATable.get(_state[ARITHMETICOPERATOR].getStateLocation());
+        JSONObject transition=(JSONObject)arithmeticOperatorDFATable.get(state[ARITHMETICOPERATOR].getStateLocation());
         try {
 
-            _state[ARITHMETICOPERATOR].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[ARITHMETICOPERATOR].getIsFinalState()&&_state[ARITHMETICOPERATOR].getStateLocation()==1)
-                _state[ARITHMETICOPERATOR].setIsFinalState(true);
+            state[ARITHMETICOPERATOR].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[ARITHMETICOPERATOR].getIsFinalState()&&state[ARITHMETICOPERATOR].getStateLocation()==1)
+                state[ARITHMETICOPERATOR].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[ARITHMETICOPERATOR].setExistNextState(false);
+            state[ARITHMETICOPERATOR].setExistNextState(false);
             return;
         }
         lexemes[ARITHMETICOPERATOR].addValue(ch);
     }
     public void comparsionOperatorDFA(int position){
-        if(!_state[COMPARISONOPERATOR].getExistNextState())
+        if(!state[COMPARISONOPERATOR].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)comparisonOperatorDFATable.get(_state[COMPARISONOPERATOR].getStateLocation());
+        JSONObject transition=(JSONObject)comparisonOperatorDFATable.get(state[COMPARISONOPERATOR].getStateLocation());
         try {
-            _state[COMPARISONOPERATOR].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[COMPARISONOPERATOR].getIsFinalState()&&(_state[COMPARISONOPERATOR].getStateLocation()==3||_state[COMPARISONOPERATOR].getStateLocation()==4||_state[COMPARISONOPERATOR].getStateLocation()==5))
-                _state[COMPARISONOPERATOR].setIsFinalState(true);
+            state[COMPARISONOPERATOR].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[COMPARISONOPERATOR].getIsFinalState()&&(state[COMPARISONOPERATOR].getStateLocation()==3||state[COMPARISONOPERATOR].getStateLocation()==4||state[COMPARISONOPERATOR].getStateLocation()==5))
+                state[COMPARISONOPERATOR].setIsFinalState(true);
 
         }catch (NullPointerException e){
-            _state[COMPARISONOPERATOR].setExistNextState(false);
+            state[COMPARISONOPERATOR].setExistNextState(false);
             return;
         }
         lexemes[COMPARISONOPERATOR].addValue(ch);
     }
     public void assignmentOperatorDFA(int position){
-        if(!_state[ASSIGNMENTOPERATOR].getExistNextState())
+        if(!state[ASSIGNMENTOPERATOR].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)assignmentOperatorDFATable.get(_state[ASSIGNMENTOPERATOR].getStateLocation());
+        JSONObject transition=(JSONObject)assignmentOperatorDFATable.get(state[ASSIGNMENTOPERATOR].getStateLocation());
         try {
-            _state[ASSIGNMENTOPERATOR].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[ASSIGNMENTOPERATOR].getIsFinalState()&&_state[ASSIGNMENTOPERATOR].getStateLocation()==1)
-                _state[ASSIGNMENTOPERATOR].setIsFinalState(true);
+            state[ASSIGNMENTOPERATOR].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[ASSIGNMENTOPERATOR].getIsFinalState()&&state[ASSIGNMENTOPERATOR].getStateLocation()==1)
+                state[ASSIGNMENTOPERATOR].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[ASSIGNMENTOPERATOR].setExistNextState(false);
+            state[ASSIGNMENTOPERATOR].setExistNextState(false);
             return;
         }
         lexemes[ASSIGNMENTOPERATOR].addValue(ch);
     }
     public void terminateSymbolDFA(int position){
-        if(!_state[TERMINATEOPERATOR].getExistNextState())
+        if(!state[TERMINATEOPERATOR].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)terminateSymboleDFATable.get(_state[TERMINATEOPERATOR].getStateLocation());
+        JSONObject transition=(JSONObject)terminateSymboleDFATable.get(state[TERMINATEOPERATOR].getStateLocation());
         try {
-            _state[TERMINATEOPERATOR].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[TERMINATEOPERATOR].getIsFinalState()&&_state[TERMINATEOPERATOR].getStateLocation()==1)
-                _state[TERMINATEOPERATOR].setIsFinalState(true);
+            state[TERMINATEOPERATOR].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[TERMINATEOPERATOR].getIsFinalState()&&state[TERMINATEOPERATOR].getStateLocation()==1)
+                state[TERMINATEOPERATOR].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[TERMINATEOPERATOR].setExistNextState(false);
+            state[TERMINATEOPERATOR].setExistNextState(false);
             return;
         }
         lexemes[TERMINATEOPERATOR].addValue(ch);
     }
     public void lParenDFA(int position){
-        if(!_state[LPAREN].getExistNextState())
+        if(!state[LPAREN].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)lParenDFATable.get(_state[LPAREN].getStateLocation());
+        JSONObject transition=(JSONObject)lParenDFATable.get(state[LPAREN].getStateLocation());
         try {
-            _state[LPAREN].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[LPAREN].getIsFinalState()&&_state[LPAREN].getStateLocation()==1)
-                _state[LPAREN].setIsFinalState(true);
+            state[LPAREN].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[LPAREN].getIsFinalState()&&state[LPAREN].getStateLocation()==1)
+                state[LPAREN].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[LPAREN].setExistNextState(false);
+            state[LPAREN].setExistNextState(false);
             return;
         }
         lexemes[LPAREN].addValue(ch);
     }
     public void rParenDFA(int position){
-        if(!_state[RPAREN].getExistNextState())
+        if(!state[RPAREN].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)rParenDFATable.get(_state[RPAREN].getStateLocation());
+        JSONObject transition=(JSONObject)rParenDFATable.get(state[RPAREN].getStateLocation());
         try {
-            _state[RPAREN].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[RPAREN].getIsFinalState()&&_state[RPAREN].getStateLocation()==1)
-                _state[RPAREN].setIsFinalState(true);
+            state[RPAREN].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[RPAREN].getIsFinalState()&&state[RPAREN].getStateLocation()==1)
+                state[RPAREN].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[RPAREN].setExistNextState(false);
+            state[RPAREN].setExistNextState(false);
             return;
         }
         lexemes[RPAREN].addValue(ch);
     }
     public void lBraceDFA(int position){
-        if(!_state[LBRACE].getExistNextState())
+        if(!state[LBRACE].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)lBraceDFATable.get(_state[LBRACE].getStateLocation());
+        JSONObject transition=(JSONObject)lBraceDFATable.get(state[LBRACE].getStateLocation());
         try {
-            _state[LBRACE].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[LBRACE].getIsFinalState()&&_state[LBRACE].getStateLocation()==1)
-                _state[LBRACE].setIsFinalState(true);
+            state[LBRACE].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[LBRACE].getIsFinalState()&&state[LBRACE].getStateLocation()==1)
+                state[LBRACE].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[LBRACE].setExistNextState(false);
+            state[LBRACE].setExistNextState(false);
             return;
         }
         lexemes[LBRACE].addValue(ch);
     }
     public void rBraceDFA(int position){
-        if(!_state[RBRACE].getExistNextState())
+        if(!state[RBRACE].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)rBraceDFATAble.get(_state[RBRACE].getStateLocation());
+        JSONObject transition=(JSONObject)rBraceDFATAble.get(state[RBRACE].getStateLocation());
         try {
-            _state[RBRACE].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[RBRACE].getIsFinalState()&&_state[RBRACE].getStateLocation()==1)
-                _state[RBRACE].setIsFinalState(true);
+            state[RBRACE].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[RBRACE].getIsFinalState()&&state[RBRACE].getStateLocation()==1)
+                state[RBRACE].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[RBRACE].setExistNextState(false);
+            state[RBRACE].setExistNextState(false);
             return;
         }
         lexemes[RBRACE].addValue(ch);
     }
     public void lBranketDFA(int position){
-        if(!_state[LBRANKET].getExistNextState())
+        if(!state[LBRANKET].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)lBranketDFATable.get(_state[LBRANKET].getStateLocation());
+        JSONObject transition=(JSONObject)lBranketDFATable.get(state[LBRANKET].getStateLocation());
         try {
-            _state[LBRANKET].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[LBRANKET].getIsFinalState()&&_state[LBRANKET].getStateLocation()==1)
-                _state[LBRANKET].setIsFinalState(true);
+            state[LBRANKET].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[LBRANKET].getIsFinalState()&&state[LBRANKET].getStateLocation()==1)
+                state[LBRANKET].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[LBRANKET].setExistNextState(false);
+            state[LBRANKET].setExistNextState(false);
             return;
         }
         lexemes[LBRANKET].addValue(ch);
     }
     public void rBranketDFA(int position){
-        if(!_state[RBRANKET].getExistNextState())
+        if(!state[RBRANKET].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)rBranketDFATable.get(_state[RBRANKET].getStateLocation());
+        JSONObject transition=(JSONObject)rBranketDFATable.get(state[RBRANKET].getStateLocation());
         try {
-            _state[RBRANKET].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[RBRANKET].getIsFinalState()&&_state[RBRANKET].getStateLocation()==1)
-                _state[RBRANKET].setIsFinalState(true);
+            state[RBRANKET].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[RBRANKET].getIsFinalState()&&state[RBRANKET].getStateLocation()==1)
+                state[RBRANKET].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[RBRANKET].setExistNextState(false);
+            state[RBRANKET].setExistNextState(false);
             return;
         }
         lexemes[RBRANKET].addValue(ch);
     }
     public void commaDFA(int position){
-        if(!_state[COMMA].getExistNextState())
+        if(!state[COMMA].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)commaDFATable.get(_state[COMMA].getStateLocation());
+        JSONObject transition=(JSONObject)commaDFATable.get(state[COMMA].getStateLocation());
         try {
-            _state[COMMA].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[COMMA].getIsFinalState()&&_state[COMMA].getStateLocation()==1)
-                _state[COMMA].setIsFinalState(true);
+            state[COMMA].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[COMMA].getIsFinalState()&&state[COMMA].getStateLocation()==1)
+                state[COMMA].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[COMMA].setExistNextState(false);
+            state[COMMA].setExistNextState(false);
             return;
         }
         lexemes[COMMA].addValue(ch);
     }
     public void whiteSpaceDFA(int position){
-        if(!_state[WHITESPACE].getExistNextState())
+        if(!state[WHITESPACE].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)whiteSpaceDFATable.get(_state[WHITESPACE].getStateLocation());
+        JSONObject transition=(JSONObject)whiteSpaceDFATable.get(state[WHITESPACE].getStateLocation());
         try {
-            _state[WHITESPACE].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[WHITESPACE].getIsFinalState()&&_state[WHITESPACE].getStateLocation()==1)
-                _state[WHITESPACE].setIsFinalState(true);
+            state[WHITESPACE].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[WHITESPACE].getIsFinalState()&&state[WHITESPACE].getStateLocation()==1)
+                state[WHITESPACE].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[WHITESPACE].setExistNextState(false);
+            state[WHITESPACE].setExistNextState(false);
             return;
         }
         lexemes[WHITESPACE].addValue(ch);
     }
 
     public void singleCharacterDFA(int position) {
-        if(!_state[SINGLECAHRACTER].getExistNextState())
+        if(!state[SINGLECAHRACTER].getExistNextState())
             return;
 
         char ch = inputstr.charAt(position);
@@ -397,16 +397,16 @@ public class DFA {
         else if (ch == ' ')
             symbolType = "blank";
         else {
-            _state[SINGLECAHRACTER].setExistNextState(false);
+            state[SINGLECAHRACTER].setExistNextState(false);
             return;
         }
         try {
-            JSONObject transition = (JSONObject) singleCharacterDFATable.get(_state[SINGLECAHRACTER].getStateLocation());
-            _state[SINGLECAHRACTER].setStateLocation(Integer.parseInt(transition.get(symbolType).toString()));
-            if(!_state[SINGLECAHRACTER].getIsFinalState()&&_state[SINGLECAHRACTER].getStateLocation()==5)
-                _state[SINGLECAHRACTER].setIsFinalState(true);
+            JSONObject transition = (JSONObject) singleCharacterDFATable.get(state[SINGLECAHRACTER].getStateLocation());
+            state[SINGLECAHRACTER].setStateLocation(Integer.parseInt(transition.get(symbolType).toString()));
+            if(!state[SINGLECAHRACTER].getIsFinalState()&&state[SINGLECAHRACTER].getStateLocation()==5)
+                state[SINGLECAHRACTER].setIsFinalState(true);
         }catch(NullPointerException e){
-            _state[SINGLECAHRACTER].setExistNextState(false);
+            state[SINGLECAHRACTER].setExistNextState(false);
             return;
         }
         if(ch!='\''){
@@ -415,7 +415,7 @@ public class DFA {
     }
 
     public void literalStringDFA(int position) {
-        if(!_state[LITERALSTRING].getExistNextState())
+        if(!state[LITERALSTRING].getExistNextState())
             return;
 
         char ch = inputstr.charAt(position);
@@ -430,16 +430,16 @@ public class DFA {
         else if (ch == ' ')
             symbolType = "blank";
         else {
-            _state[LITERALSTRING].setExistNextState(false);
+            state[LITERALSTRING].setExistNextState(false);
             return;
         }
         try {
-            JSONObject transition = (JSONObject) literalStringDFATable.get(_state[LITERALSTRING].getStateLocation());
-            _state[LITERALSTRING].setStateLocation(Integer.parseInt(transition.get(symbolType).toString()));
-            if(!_state[LITERALSTRING].getIsFinalState()&&_state[LITERALSTRING].getStateLocation()==5)
-                _state[LITERALSTRING].setIsFinalState(true);
+            JSONObject transition = (JSONObject) literalStringDFATable.get(state[LITERALSTRING].getStateLocation());
+            state[LITERALSTRING].setStateLocation(Integer.parseInt(transition.get(symbolType).toString()));
+            if(!state[LITERALSTRING].getIsFinalState()&&state[LITERALSTRING].getStateLocation()==5)
+                state[LITERALSTRING].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[LITERALSTRING].setExistNextState(false);
+            state[LITERALSTRING].setExistNextState(false);
             return;
         }
         if(ch!='\"') {
@@ -448,90 +448,90 @@ public class DFA {
     }
 
     public void signedIntegerDFA(int position) {
-        if(!_state[SIGNEDINTEGER].getExistNextState())
+        if(!state[SIGNEDINTEGER].getExistNextState())
             return;
 
         char ch = inputstr.charAt(position);
 
         String symbolType;
-        if ((ch >= '1' && ch <= '9') && (_state[SIGNEDINTEGER].getStateLocation() == 0 || _state[SIGNEDINTEGER].getStateLocation() == 2))
+        if ((ch >= '1' && ch <= '9') && (state[SIGNEDINTEGER].getStateLocation() == 0 || state[SIGNEDINTEGER].getStateLocation() == 2))
             symbolType = "positive";
-        else if ((ch >= '0' && ch <= '9') && (_state[SIGNEDINTEGER].getStateLocation() == 1 || _state[SIGNEDINTEGER].getStateLocation() == 3))
+        else if ((ch >= '0' && ch <= '9') && (state[SIGNEDINTEGER].getStateLocation() == 1 || state[SIGNEDINTEGER].getStateLocation() == 3))
             symbolType = "digit";
         else if (ch == '-')
             symbolType = "-";
-        else if (ch == '0' && _state[SIGNEDINTEGER].getStateLocation() == 0)
+        else if (ch == '0' && state[SIGNEDINTEGER].getStateLocation() == 0)
             symbolType = "0";
         else {
-            _state[SIGNEDINTEGER].setExistNextState(false);
+            state[SIGNEDINTEGER].setExistNextState(false);
             return;
         }
 
         try {
-            JSONObject transition = (JSONObject) signedIntegerDFATable.get(_state[SIGNEDINTEGER].getStateLocation());
-            _state[SIGNEDINTEGER].setStateLocation(Integer.parseInt(transition.get(symbolType).toString()));
-            if(!_state[SIGNEDINTEGER].getIsFinalState()&&(_state[SIGNEDINTEGER].getStateLocation()==1||_state[SIGNEDINTEGER].getStateLocation()==3||_state[SIGNEDINTEGER].getStateLocation()==4))
-                _state[SIGNEDINTEGER].setIsFinalState(true);
+            JSONObject transition = (JSONObject) signedIntegerDFATable.get(state[SIGNEDINTEGER].getStateLocation());
+            state[SIGNEDINTEGER].setStateLocation(Integer.parseInt(transition.get(symbolType).toString()));
+            if(!state[SIGNEDINTEGER].getIsFinalState()&&(state[SIGNEDINTEGER].getStateLocation()==1||state[SIGNEDINTEGER].getStateLocation()==3||state[SIGNEDINTEGER].getStateLocation()==4))
+                state[SIGNEDINTEGER].setIsFinalState(true);
         }catch(NullPointerException e){
-            _state[SIGNEDINTEGER].setExistNextState(false);
+            state[SIGNEDINTEGER].setExistNextState(false);
             return;
         }
         lexemes[SIGNEDINTEGER].addValue(ch);
     }
 
     public void keywordDFA(int position){
-        if(!_state[KEYWORD].getExistNextState())
+        if(!state[KEYWORD].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)keywordDFATable.get(_state[KEYWORD].getStateLocation());
+        JSONObject transition=(JSONObject)keywordDFATable.get(state[KEYWORD].getStateLocation());
         try {
-            _state[KEYWORD].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[KEYWORD].getIsFinalState()&&_state[KEYWORD].getStateLocation()==18)
-                _state[KEYWORD].setIsFinalState(true);
+            state[KEYWORD].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[KEYWORD].getIsFinalState()&&state[KEYWORD].getStateLocation()==18)
+                state[KEYWORD].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[KEYWORD].setExistNextState(false);
+            state[KEYWORD].setExistNextState(false);
             return;
         }
         lexemes[KEYWORD].addValue(ch);
     }
     public void variableTypeDFA(int position){
-        if(!_state[VARIABLETYPE].getExistNextState())
+        if(!state[VARIABLETYPE].getExistNextState())
             return;
 
         char ch=inputstr.charAt(position);
 
-        JSONObject transition=(JSONObject)variableTypeDFATable.get(_state[VARIABLETYPE].getStateLocation());
+        JSONObject transition=(JSONObject)variableTypeDFATable.get(state[VARIABLETYPE].getStateLocation());
         try {
-            _state[VARIABLETYPE].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[VARIABLETYPE].getIsFinalState()&&_state[VARIABLETYPE].getStateLocation()==17)
-                _state[VARIABLETYPE].setIsFinalState(true);
+            state[VARIABLETYPE].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[VARIABLETYPE].getIsFinalState()&&state[VARIABLETYPE].getStateLocation()==17)
+                state[VARIABLETYPE].setIsFinalState(true);
         }catch (NullPointerException e){
-            _state[VARIABLETYPE].setExistNextState(false);
+            state[VARIABLETYPE].setExistNextState(false);
             return;
         }
         lexemes[VARIABLETYPE].addValue(ch);
     }
     public void booleanStringDFA(int position) {
-        if(!_state[BOOLEANSTRING].getExistNextState())
+        if(!state[BOOLEANSTRING].getExistNextState())
             return;
 
         char ch = inputstr.charAt(position);
 
-        JSONObject transition = (JSONObject) booleanStringDFATable.get(_state[BOOLEANSTRING].getStateLocation());
+        JSONObject transition = (JSONObject) booleanStringDFATable.get(state[BOOLEANSTRING].getStateLocation());
         try {
-            _state[BOOLEANSTRING].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
-            if(!_state[BOOLEANSTRING].getIsFinalState()&&_state[BOOLEANSTRING].getStateLocation()==8)
-                _state[BOOLEANSTRING].setIsFinalState(true);
+            state[BOOLEANSTRING].setStateLocation(Integer.parseInt(transition.get(Character.toString(ch)).toString()));
+            if(!state[BOOLEANSTRING].getIsFinalState()&&state[BOOLEANSTRING].getStateLocation()==8)
+                state[BOOLEANSTRING].setIsFinalState(true);
         } catch (NullPointerException e) {
-            _state[BOOLEANSTRING].setExistNextState(false);
+            state[BOOLEANSTRING].setExistNextState(false);
             return;
         }
         lexemes[BOOLEANSTRING].addValue(ch);
     }
     public void identifierDFA(int position) {
-        if(!_state[IDENTIFIER].getExistNextState())
+        if(!state[IDENTIFIER].getExistNextState())
             return;
 
         char ch = inputstr.charAt(position);
@@ -544,17 +544,17 @@ public class DFA {
         else if (ch >= '0' && ch <= '9')
             symbolType = "digit";
         else {
-            _state[IDENTIFIER].setExistNextState(false);
+            state[IDENTIFIER].setExistNextState(false);
             return;
         }
 
         try {
-            JSONObject transition = (JSONObject) indentifierDFATable.get(_state[IDENTIFIER].getStateLocation());
-            _state[IDENTIFIER].setStateLocation(Integer.parseInt(transition.get(symbolType).toString()));
-            if(!_state[IDENTIFIER].getIsFinalState()&&(_state[IDENTIFIER].getStateLocation()==1||_state[IDENTIFIER].getStateLocation()==2||_state[IDENTIFIER].getStateLocation()==3||_state[IDENTIFIER].getStateLocation()==4||_state[IDENTIFIER].getStateLocation()==5))
-                _state[IDENTIFIER].setIsFinalState(true);
+            JSONObject transition = (JSONObject) indentifierDFATable.get(state[IDENTIFIER].getStateLocation());
+            state[IDENTIFIER].setStateLocation(Integer.parseInt(transition.get(symbolType).toString()));
+            if(!state[IDENTIFIER].getIsFinalState()&&(state[IDENTIFIER].getStateLocation()==1||state[IDENTIFIER].getStateLocation()==2||state[IDENTIFIER].getStateLocation()==3||state[IDENTIFIER].getStateLocation()==4||state[IDENTIFIER].getStateLocation()==5))
+                state[IDENTIFIER].setIsFinalState(true);
         }catch(NullPointerException e){
-            _state[IDENTIFIER].setExistNextState(false);
+            state[IDENTIFIER].setExistNextState(false);
             return;
         }
         lexemes[IDENTIFIER].addValue(ch);
