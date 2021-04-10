@@ -10,28 +10,27 @@ public class LexicalAnalyzer {
         this.file = file;
     }
 
-    @Override
-    public String toString() {
+    public void execute() {
 
-        String str = "";
-        String inputstr="";
+        String getOneLine = "";
+        String input = "";
         try {
+            //Read input file
             BufferedReader br = new BufferedReader(new FileReader(file));
 
-            while((str=br.readLine())!=null){
-                inputstr+=str;
+            //Read one line at a time from the file and concatenate each other
+            while ((getOneLine = br.readLine()) != null) {
+                input += getOneLine;
             }
-            DFA dfa=new DFA(inputstr, 0);
+            //Init DFA
+            DFA dfa = new DFA(input, 0);
             dfa.run();
-            br.close();
 
+            br.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "LexicalAnalyzer{" +
-                "file=" + str +
-                '}';
     }
 }

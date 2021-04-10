@@ -4,27 +4,30 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
+//Define all kind of tokens' DFA to transition table by json format
 public class DFATable {
     public DFATable(){}
 
+    //Identifier trasition table
     public JSONArray identifierDFATable(){
-        String dfaTable="[" +
-                "{\"_\":1, \"letter\":2}"+
-                "{\"_\":3, \"letter\":4, \"digit\": 5}"+
-                "{\"_\":3, \"letter\":4, \"digit\": 5}"+
-                "{\"_\":3, \"letter\":4, \"digit\": 5}"+
-                "{\"_\":3, \"letter\":4, \"digit\": 5}"+
-                "{\"_\":3, \"letter\":4, \"digit\": 5}"+
+        String dfaTable="[" +                               //    '_'   letter  digit
+                "{\"_\":1, \"letter\":2}"+                  //T0: T1      T2
+                "{\"_\":3, \"letter\":4, \"digit\": 5}"+    //T1: T3      T4     T5
+                "{\"_\":3, \"letter\":4, \"digit\": 5}"+    //T2: T3      T4     T5
+                "{\"_\":3, \"letter\":4, \"digit\": 5}"+    //T3: T3      T4     T5
+                "{\"_\":3, \"letter\":4, \"digit\": 5}"+    //T4: T3      T4     T5
+                "{\"_\":3, \"letter\":4, \"digit\": 5}"+    //T5: T3      T4     T5
                 "]";
         JSONParser jsonParser=new JSONParser();
         try {
-            //JSONArray dfaTableArray= (JSONArray) jsonParser.parse(dfaTable);
             return (JSONArray) jsonParser.parse(dfaTable);
         }catch(ParseException e){
             e.printStackTrace();
             return null;
         }
     }
+    //Single Character trasition table
     public JSONArray singleCharacterDFATable(){
         String dfaTable="[" +
                 "{\"'\":1}"+
@@ -42,6 +45,7 @@ public class DFATable {
             return null;
         }
     }
+    //Literal String trasition table
     public JSONArray literalStringDFATable(){
         String dfaTable="[" +
                 "{\"double quotes\":1}"+
@@ -59,6 +63,7 @@ public class DFATable {
             return null;
         }
     }
+    //Signed Integer trasition table
     public JSONArray signedIntegerDFATable(){
         String dfaTable="[" +
                 "{\"positive\":1, \"-\":2, \"0\":4}"+
@@ -75,6 +80,7 @@ public class DFATable {
             return null;
         }
     }
+    //Boolean String trasition table
     public JSONArray booleanStringDFATable(){
         String dfaTable="[" +
                 "{\"t\":1, \"f\":4}"+
@@ -95,6 +101,7 @@ public class DFATable {
             return null;
         }
     }
+    //Keyword trasition table
     public JSONArray keywordDFATable(){
         String dfaTable="[" +
                 "{\"i\":1, \"e\":2, \"w\":5, \"c\":9, \"r\":13}"+
@@ -125,6 +132,7 @@ public class DFATable {
             return null;
         }
     }
+    //Variable Type transition table
     public JSONArray variableTypeDFATable(){
         String dfaTable="[" +
                 "{\"i\":1, \"c\":3, \"b\":6, \"S\":12}"+
@@ -154,6 +162,7 @@ public class DFATable {
             return null;
         }
     }
+    //Arithmetic Operator trasition table
     public JSONArray arithmeticOperatorDFATable(){
         String dfaTable="[" +
                 "{\"+\":1, \"-\":1, \"*\":1, \"/\":1}"+
@@ -167,7 +176,8 @@ public class DFATable {
             return null;
         }
     }
-    public JSONArray assginmentOperatorDFATable(){
+    //Assignment Operator trasition table
+    public JSONArray assignmentOperatorDFATable(){
         String dfaTable="[" +
                 "{\"=\":1}"+
                 "{}"+
@@ -180,6 +190,7 @@ public class DFATable {
             return null;
         }
     }
+    //Comparison Operator trasition table
     public JSONArray ComparisonOperatorDFATable(){
         String dfaTable="[" +
                 "{\"=\":1, \"!\":2, \"<\":3, \">\":4}"+
@@ -197,6 +208,7 @@ public class DFATable {
             return null;
         }
     }
+    //Terminate Symbol trasition table
     public JSONArray terminateSymbolDFATable(){
         String dfaTable="[" +
                 "{\";\":1}"+
@@ -210,6 +222,7 @@ public class DFATable {
             return null;
         }
     }
+    //Left Paren Symbol trasition table
     public JSONArray lParenDFATable(){
         String dfaTable="[" +
                 "{\"(\":1}"+
@@ -223,6 +236,7 @@ public class DFATable {
             return null;
         }
     }
+    //Right Paren Symbol trasition table
     public JSONArray rParenDFATable(){
         String dfaTable="[" +
                 "{\")\":1}"+
@@ -236,6 +250,7 @@ public class DFATable {
             return null;
         }
     }
+    //Left Brace Symbol trasition table
     public JSONArray lBraceDFATable(){
         String dfaTable="[" +
                 "{\"{\":1}"+
@@ -249,6 +264,7 @@ public class DFATable {
             return null;
         }
     }
+    //Right Brace Symbol trasition table
     public JSONArray rBraceDFATable(){
         String dfaTable="[" +
                 "{\"}\":1}"+
@@ -262,6 +278,7 @@ public class DFATable {
             return null;
         }
     }
+    //Left Branket Symbol trasition table
     public JSONArray lBranketDFATable(){
         String dfaTable="[" +
                 "{\"[\":1}"+
@@ -275,6 +292,7 @@ public class DFATable {
             return null;
         }
     }
+    //Right Branket Symbol trasition table
     public JSONArray rBranketDFATable(){
         String dfaTable="[" +
                 "{\"]\":1}"+
@@ -288,6 +306,7 @@ public class DFATable {
             return null;
         }
     }
+    //Comma Symbol trasition table
     public JSONArray commaDFATable(){
         String dfaTable="[" +
                 "{\",\":1}"+
@@ -301,6 +320,7 @@ public class DFATable {
             return null;
         }
     }
+    //White space trasition table
     public JSONArray whiteSpaceDFATable(){
         String dfaTable="[" +
                 "{\" \":1, \"\t\":1, \"\n\":1}"+

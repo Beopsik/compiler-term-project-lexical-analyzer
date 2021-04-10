@@ -1,23 +1,35 @@
 package dfa;
 
+//Class that stores information about Token
 public class Token {
+    //variable about token name
     private String key;
-    private String value="";
-    public Token(){
+
+    //variable about lexeme
+    private String value = "";
+
+    public Token() {
     }
-    public void tokenClear(){
-        this.value="";
+
+    //Clear lexeme
+    public void tokenClear() {
+        this.value = "";
     }
-    public void addValue(char ch){
-        value+=ch;
+
+    //Concatenate input with lexeme
+    public void addValue(char ch) {
+        value += ch;
     }
-    public String getValue(){
+
+    public String getValue() {
         return value;
     }
-    public void setKey(String key){
-        this.key=key;
+
+    public void setKey(String key) {
+        this.key = key;
     }
-    public String getKey(){
+
+    public String getKey() {
         return key;
     }
 }
